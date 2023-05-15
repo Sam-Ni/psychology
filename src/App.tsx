@@ -1,11 +1,13 @@
+import React from 'react';
+import logo from './logo.svg';
 import './App.css';
-import {Button} from "antd";
+import { Button } from "antd";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Button type={'primary'}>This is Sam using antd</Button>
+        <Button type={'primary'}>Button</Button>
       </header>
     </div>
   );
