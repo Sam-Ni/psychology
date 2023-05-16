@@ -1,0 +1,29 @@
+.form-container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.login-form {
+    width: 400px;
+    /*padding: 10px;*/
+    /*border-radius: 10px;*/
+    /*box-shadow: 3px 3px 5px 0px #d9d9d9;*/
+}
+.login-form-forgot {
+    float: right;
+}
+.ant-col-rtl .login-form-forgot {
+    float: left;
+}
+.login-form-button {
+    width: 100%;
+}
+
+.title{
+    color: white;
+    font-size: 20px;
+}
