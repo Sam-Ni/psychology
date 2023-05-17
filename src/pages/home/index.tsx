@@ -21,7 +21,7 @@ function Index() {
           <HomeMenu />
         </Sider>
         <Layout>
-          <Content style={{ padding: '0 50px' }}>
+          <Content style={{padding: "0 20px"}}>
             <Outlet></Outlet>
           </Content>
           <HomeFooter />

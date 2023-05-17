@@ -2,3 +2,13 @@
     color: white;
     font-size: 20px;
 }
+
+.user-div{
+    flex: 1;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.welcome-text{
+    color: white;
+}
