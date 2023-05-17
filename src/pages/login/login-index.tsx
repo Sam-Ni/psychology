@@ -3,10 +3,24 @@ import {Button, Card, Form, Input, Layout, Menu} from "antd";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import "./login-index.css"
 import {Content, Footer, Header} from "antd/es/layout/layout";
+import {Md5} from "ts-md5";
+import {redirect, useNavigate} from "react-router-dom";
+import axios from "axios";
+import Cookies from "universal-cookie";
 
 function LoginIndex() {
+  const navigate = useNavigate();
   const onFinish = (values: any) => {
-    console.log('Success:', values);
+    const { username, password } = values;
+    const md5_password = Md5.hashStr(password);
+    console.log('Success:', { username, password, md5_password });
+    // TODO use axios to post
+    // const post_data = { username, md5_password };
+    // axios.post('lalala', post_data)
+    //   .then(res => {})
+    const cookies=  new Cookies();
+    cookies.set('user', '123');
+    navigate('/home');
   };
 
   const onFinishFailed = (errorInfo: any) => {
