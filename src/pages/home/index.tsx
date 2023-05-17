@@ -12,22 +12,21 @@ function Index() {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <Layout className="layout" >
+    <Layout className="layout">
 
-      <HomeHeader />
+      <HomeHeader/>
 
       <Layout>
         <Sider theme="light" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-          <HomeMenu />
+          <HomeMenu/>
         </Sider>
         <Layout>
-          <Content style={{ padding: '0 50px' }}>
+          <Content style={{padding: '0 50px'}}>
             <Outlet></Outlet>
           </Content>
-          <HomeFooter />
+          <HomeFooter/>
         </Layout>
       </Layout>
-
 
 
     </Layout>
