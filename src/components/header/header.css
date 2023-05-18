@@ -11,4 +11,10 @@
 
 .welcome-text{
     color: white;
+    margin-right: 10px;
+}
+
+.avatar-container{
+    display: flex;
+    align-items: center;
 }
