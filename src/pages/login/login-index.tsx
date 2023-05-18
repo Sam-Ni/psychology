@@ -8,6 +8,7 @@ import {redirect, useNavigate} from "react-router-dom";
 import axios from "axios";
 import Cookies from "universal-cookie";
 
+
 function LoginIndex() {
   const navigate = useNavigate();
   const onFinish = (values: any) => {
@@ -15,12 +16,26 @@ function LoginIndex() {
     const md5_password = Md5.hashStr(password);
     console.log('Success:', { username, password, md5_password });
     // TODO use axios to post
-    // const post_data = { username, md5_password };
-    // axios.post('lalala', post_data)
-    //   .then(res => {})
-    const cookies=  new Cookies();
-    cookies.set('user', '123');
-    navigate('/home');
+    const post_data = { username, md5_password };
+    axios.defaults.withCredentials = true;
+    const service = axios.create({
+      baseURL: 'http://localhost:8080',
+      withCredentials: true,
+      timeout: 20000
+    });
+    service.post('/account/login', {},
+      { params: {username: username, password: password}})
+      .then(res => {
+        // console.log(res.headers['rememberMe']);
+        // console.log(res.headers['Set-Cookie']);
+        // console.log(res.headers);
+        console.log(document.cookie.match('rememberMe')?.pop());
+        // console.log(document.cookie.match('rememberMe')?.pop());
+        navigate('/home');
+      })
+      .catch(e => console.log(e))
+    // const cookies=  new Cookies();
+    // cookies.set('user', '123');
   };
 
   const onFinishFailed = (errorInfo: any) => {

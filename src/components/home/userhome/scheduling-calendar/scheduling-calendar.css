@@ -1,0 +1,62 @@
+.my-calendar table thead tr > th:nth-child(1) {
+    visibility: hidden;
+}
+
+.my-calendar table thead tr > th:nth-child(1)::after {
+    content: "周一";
+    visibility: visible;
+}
+
+.my-calendar table thead tr > th:nth-child(2) {
+    visibility: hidden;
+}
+
+.my-calendar table thead tr > th:nth-child(2)::after {
+    content: "周二";
+    visibility: visible;
+}
+.my-calendar table thead tr > th:nth-child(3) {
+    visibility: hidden;
+}
+
+.my-calendar table thead tr > th:nth-child(3)::after {
+    content: "周三";
+    visibility: visible;
+}
+.my-calendar table thead tr > th:nth-child(4) {
+    visibility: hidden;
+}
+
+.my-calendar table thead tr > th:nth-child(4)::after {
+    content: "周四";
+    visibility: visible;
+}
+.my-calendar table thead tr > th:nth-child(5) {
+    visibility: hidden;
+}
+
+.my-calendar table thead tr > th:nth-child(5)::after {
+    content: "周五";
+    visibility: visible;
+}
+.my-calendar table thead tr > th:nth-child(6) {
+    visibility: hidden;
+}
+
+.my-calendar table thead tr > th:nth-child(6)::after {
+    content: "周六";
+    visibility: visible;
+}
+.my-calendar table thead tr > th:nth-child(7) {
+    visibility: hidden;
+}
+
+.my-calendar table thead tr > th:nth-child(7)::after {
+    content: "周日";
+    visibility: visible;
+}
+
+/* TODO this attribute needs to be modified */
+.my-calendar table tbody:nth-child(2) td div:nth-child(2) {
+    height: auto;
+}
