@@ -1,41 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button, Card, Form, Input, Layout, Menu} from "antd";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import "./login-index.css"
 import {Content, Footer, Header} from "antd/es/layout/layout";
 import {Md5} from "ts-md5";
-import {redirect, useNavigate} from "react-router-dom";
-import axios from "axios";
-import Cookies from "universal-cookie";
+import {login} from "../../api/login";
+import {useNavigate} from "react-router-dom";
+import {isLogin} from "../../util/common_function";
 
 
 function LoginIndex() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLogin()) {
+      navigate('/home');
+    }
+  })
   const onFinish = (values: any) => {
     const { username, password } = values;
     const md5_password = Md5.hashStr(password);
     console.log('Success:', { username, password, md5_password });
-    // TODO use axios to post
-    const post_data = { username, md5_password };
-    axios.defaults.withCredentials = true;
-    const service = axios.create({
-      baseURL: 'http://localhost:8080',
-      withCredentials: true,
-      timeout: 20000
-    });
-    service.post('/account/login', {},
-      { params: {username: username, password: password}})
-      .then(res => {
-        // console.log(res.headers['rememberMe']);
-        // console.log(res.headers['Set-Cookie']);
-        // console.log(res.headers);
-        console.log(document.cookie.match('rememberMe')?.pop());
-        // console.log(document.cookie.match('rememberMe')?.pop());
-        navigate('/home');
-      })
-      .catch(e => console.log(e))
-    // const cookies=  new Cookies();
-    // cookies.set('user', '123');
+    login(username, password)
+      .then(success => {
+        if (success) {
+          navigate('/home');
+        }
+      });
   };
 
   const onFinishFailed = (errorInfo: any) => {

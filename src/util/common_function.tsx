@@ -1,6 +1,6 @@
 
 export const isLogin = () => {
-  return !!document.cookie.match('user');
+  return !!localStorage.getItem('user');
 }
 
 

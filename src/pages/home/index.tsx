@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Content, Footer, Header} from "antd/es/layout/layout";
 import {Button, Card, Form, Input, Layout, theme} from "antd";
 
-import {BrowserRouter, Outlet} from 'react-router-dom';
+import {BrowserRouter, Navigate, Outlet, useNavigate} from 'react-router-dom';
 import HomeHeader from "../../components/header/header";
 import HomeFooter from "../../components/footer/footer";
 import HomeMenu from "../../components/menu/menu";

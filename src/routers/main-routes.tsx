@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import ReactDOM from "react-dom";
 import {Route, Link, BrowserRouter as Router, Routes, Navigate} from "react-router-dom";
 
@@ -16,10 +16,9 @@ import UserHome from "../pages/home/userhome/user-home";
 const MainRoutes = () => {
   return (
     <Routes>
-      // need to judge auth
-      <Route path="/" element={ isLogin() ? <Navigate to='/home' /> : <Navigate to='login' /> } />
-      <Route path="/login" Component={LoginIndex}/>
-      <Route path="/home" Component={Index}>
+      <Route path="/" element={ isLogin() ? <Navigate to='/home' /> : <Navigate to='/login' /> } />
+      <Route path="/login" element={ <LoginIndex />}/>
+      <Route path="/home" element={ <Index />}>
         <Route index Component={UserHome}/>
         <Route path="1" Component={UserHome}/>
         <Route path="2" Component={Content2}/>
