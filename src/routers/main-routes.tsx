@@ -4,7 +4,6 @@ import {Route, Link, BrowserRouter as Router, Routes, Navigate} from "react-rout
 
 import LoginIndex from "../pages/login/login-index";
 import Index from "../pages/home";
-import Content1 from "../components/content/example/content1";
 import Content2 from "../components/content/example/Content2";
 
 import {isLogin} from "../util/common_function";
