@@ -9,11 +9,11 @@ import {isLogin} from "../../util/common_function";
 function HomeHeader() {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isLogin()) {
-      navigate('/login');
-    }
-  })
+  // useEffect(() => {
+  //   if (!isLogin()) {
+  //     navigate('/login');
+  //   }
+  // })
   const onLogoutClick = () => {
     localStorage.removeItem('user');
     navigate('/login');

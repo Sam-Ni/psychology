@@ -1,0 +1,26 @@
+
+.available {
+  background-color: yellowgreen;
+  padding: 8px 16px 8px 16px;
+  border-radius: 10%;
+  width: fit-content;
+  color: white;
+}
+
+.full {
+  background-color: orangered;
+  padding: 8px 16px 8px 16px;
+  border-radius: 10%;
+  width: fit-content;
+  color: white;
+}
+
+.ant-table-tbody > tr > td {
+  height: 1px;
+  padding: 2px;
+}
+
+.ant-table-thead > tr > th {
+  height: 1px;
+  padding: 4px;
+}
