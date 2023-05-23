@@ -5,10 +5,10 @@ import {Button, Card, Form, Input, Layout, theme} from "antd";
 import {BrowserRouter, Outlet} from 'react-router-dom';
 import HomeHeader from "../../components/header/header";
 import HomeFooter from "../../components/footer/footer";
-import HomeMenu from "../../components/menu/menu";
+import CounselorMenu from "../../components/counselor/menu/menu";
 import Sider from "antd/es/layout/Sider";
 
-function Index() {
+function CounselorIndex() {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -18,7 +18,7 @@ function Index() {
 
       <Layout>
         <Sider theme="light" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-          <HomeMenu/>
+          <CounselorMenu/>
         </Sider>
         <Layout>
           <Content style={{padding: "0 20px"}}>
@@ -33,4 +33,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default CounselorIndex;

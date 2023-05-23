@@ -1,13 +1,13 @@
 import React from 'react';
-import UserCard from "../../../components/home/userhome/user-card/user-card";
+import UserCard from "../../../components/counselor/home/user-card/user-card";
 import {Col, ConfigProvider, Row, Space} from "antd";
-import TodayCard from "../../../components/home/userhome/today-card/today-card";
-import SchedulingCalendar from "../../../components/home/userhome/scheduling-calendar/scheduling-calendar";
+import TodayCard from "../../../components/counselor/home/today-card/today-card";
+import SchedulingCalendar from "../../../components/counselor/home/scheduling-calendar/scheduling-calendar";
 
 import locale from 'antd/locale/zh_CN';
-import RecentTable from "../../../components/home/userhome/recent-table/recent-table";
+import RecentTable from "../../../components/counselor/home/recent-table/recent-table";
 
-function UserHome()
+function CounselorHome()
 {
   return (
     <ConfigProvider locale={locale}>
@@ -32,4 +32,4 @@ function UserHome()
   );
 }
 
-export default UserHome;
+export default CounselorHome;
