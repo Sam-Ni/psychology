@@ -12,6 +12,7 @@ import CounselorHome from "../pages/counselor/home/counselor-home";
 import SupervisorHome from "../pages/supervisor/home/supervisor-home";
 import AdminIndex from "../pages/admin";
 import AdminHome from "../pages/admin/home/admin-home";
+import SampleChat from "../components/counselor/test-IM/test-IM";
 
 /*
 主路由
@@ -25,7 +26,7 @@ const MainRoutes = () => {
       <Route path="/counselor" Component={CounselorIndex}>
         <Route index Component={CounselorHome}/>
         <Route path="home" Component={CounselorHome}/>
-        <Route path="2" Component={Content2}/>
+        <Route path="2" Component={SampleChat}/>
       </Route>
       <Route path="/supervisor" Component={SupervisorIndex}>
         <Route index Component={SupervisorHome}/>

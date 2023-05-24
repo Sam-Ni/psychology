@@ -23,6 +23,10 @@ function LoginIndex() {
     console.log('Success:', { username, password, md5_password });
     login(username, password)
       .then(success => {
+        // Note: This is code is only for front end test!
+        localStorage.setItem('user', username);
+        navigate('/counselor');
+        ////////
         if (success) {
           navigate('/counselor');
         }
