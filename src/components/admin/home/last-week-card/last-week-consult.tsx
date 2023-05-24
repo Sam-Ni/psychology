@@ -11,10 +11,11 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import {faker, tr} from "@faker-js/faker";
-import {getDateOfLastSevenDays} from "../../../../utils/utils";
+import {faker, } from "@faker-js/faker";
 
 import './last-week-consult.css'
+import {getDateOfLastSevenDays} from "../../../../util/fake";
+// import {getDateOfLastSevenDays} from "../../../../admin-home/utils/utils";
 
 ChartJS.register(
   CategoryScale,

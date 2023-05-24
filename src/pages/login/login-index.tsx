@@ -14,7 +14,7 @@ function LoginIndex() {
 
   useEffect(() => {
     if (isLogin()) {
-      navigate('/home');
+      navigate('/counselor');
     }
   })
   const onFinish = (values: any) => {
@@ -24,7 +24,7 @@ function LoginIndex() {
     login(username, password)
       .then(success => {
         if (success) {
-          navigate('/home');
+          navigate('/counselor');
         }
       });
   };

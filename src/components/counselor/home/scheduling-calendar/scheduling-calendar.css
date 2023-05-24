@@ -60,3 +60,8 @@
 .my-calendar table tbody:nth-child(2) td div:nth-child(2) {
     height: auto;
 }
+
+.calendar-title{
+    font-size: 25px;
+    font-weight: bold;
+}

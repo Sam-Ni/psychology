@@ -8,7 +8,7 @@ import {Menu} from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 
 
-function HomeMenu(){
+function CounselorMenu(){
   const navigate = useNavigate();
 
   return(
@@ -23,4 +23,4 @@ function HomeMenu(){
   )
 }
 
-export default HomeMenu;
+export default CounselorMenu;

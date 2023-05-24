@@ -1,11 +1,8 @@
 import React, {useState} from 'react';
-import {Button, Calendar, Card, Rate, Space, Table, Typography} from "antd";
-import type { ColumnsType } from 'antd/es/table';
-import {faker, fakerEN} from "@faker-js/faker";
-import {getFakeConsultantData, getFakeRecordData} from "../../../../utils/utils";
+import {Card, Table} from "antd";
 
 import './online-consultant.css'
-const {Text} = Typography;
+import {getFakeConsultantData} from "../../../../util/fake";
 
 const columns = [
   {

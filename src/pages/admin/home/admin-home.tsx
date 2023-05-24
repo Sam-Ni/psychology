@@ -1,19 +1,14 @@
 import React from "react";
-import UserCard from "../../../../components/home/userhome/user-card/user-card";
-import TodayCard from "../../../../components/home/userhome/today-card/today-card";
-import SchedulingCalendar from "../../../../components/home/userhome/scheduling-calendar/scheduling-calendar";
 import {Col, ConfigProvider, Row} from "antd";
-import RecentTable from "../../../../components/home/userhome/recent-table/recent-table";
 import locale from "antd/locale/zh_CN";
-import TodayCardAdmin from "../../../components/home/admin-home/today-card/today-card-admin";
-import {TodayChartCard} from "../../../components/home/admin-home/today-card/today-chart/today-chart-card";
-import OnlineConsultantCard from "../../../components/home/admin-home/online-consultant-card/online-consultant-card";
-import {CurrentChatCard} from "../../../components/home/admin-home/current-chat-card/current-chat-card";
-import {LastWeekConsult} from "../../../components/home/admin-home/last-week-card/last-week-consult";
-import {
-  MonthConsultCard
-} from "../../../components/home/admin-home/current-month/month-consult-card/month-consult-card";
-import {getFakeRankConsult} from "../../../utils/utils";
+import TodayCardAdmin from "../../../components/admin/home/today-card/today-card-admin";
+import {TodayChartCard} from "../../../components/admin/home/today-card/today-chart/today-chart-card";
+import OnlineConsultantCard from "../../../components/admin/home/online-consultant-card/online-consultant-card";
+import {LastWeekConsult} from "../../../components/admin/home/last-week-card/last-week-consult";
+import {MonthConsultCard} from "../../../components/admin/home/current-month/month-consult-card/month-consult-card";
+import {CurrentChatCard} from "../../../components/admin/home/current-chat-card/current-chat-card";
+import {getFakeRankConsult} from "../../../util/fake";
+
 
 
 function AdminHome()
