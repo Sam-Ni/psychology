@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Card, Row, Col, Divider, Image, Rate, Button, Space, Statistic} from "antd";
 import "./user-card.css"
+import {OnlineStateDiv} from "../../../common/common";
 
 function UserCard()
 {
@@ -35,12 +36,10 @@ function UserCard()
         </Col>
         <Col className="card-left" style={{marginLeft:"10px", marginRight:"10px"}} >
           <Space direction="vertical" style={{height:"100%"}}>
-            <Row justify="space-around">
+            <Row justify="space-around" align={'middle'}>
               <Col>XX</Col>
               <Col>
-                <div style={{color: busyColor}}>
-                  {busyText}
-                </div>
+                <OnlineStateDiv state={true}/>
               </Col>
             </Row>
             <Row>我的综合评价</Row>

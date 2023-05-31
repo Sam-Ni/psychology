@@ -6,6 +6,7 @@ import SchedulingCalendar from "../../../components/counselor/home/scheduling-ca
 
 import locale from 'antd/locale/zh_CN';
 import RecentTable from "../../../components/supervisor/home/recent-table/recent-table";
+import OnlineCounselor from "../../../components/supervisor/home/online-counselor/online-counselor";
 
 function SupervisorHome()
 {
@@ -20,6 +21,7 @@ function SupervisorHome()
             <UserCard />
             <br/>
             <TodayCard />
+            <OnlineCounselor title={'在线咨询师'} style={{marginTop:'20px'}} />
           </Col>
           <Col style={{width:"60%", height:"100%"}}>
             <SchedulingCalendar />

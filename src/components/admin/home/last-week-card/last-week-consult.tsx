@@ -15,7 +15,12 @@ import {faker, } from "@faker-js/faker";
 
 import './last-week-consult.css'
 import {getDateOfLastSevenDays} from "../../../../util/fake";
+import {CSSProperties} from "react";
 // import {getDateOfLastSevenDays} from "../../../../admin-home/utils/utils";
+
+interface LastWeekChartProps{
+  style?: CSSProperties;
+}
 
 ChartJS.register(
   CategoryScale,
@@ -56,12 +61,10 @@ export const data = {
   ],
 };
 
-export function LastWeekConsult() {
+export function LastWeekConsult({style={}}:LastWeekChartProps) {
   return (
-    <Card >
-      <div className='last-table'>
+    <Card style={style}>
         <Line options={options} data={data} />
-      </div>
     </Card>
   );
 }

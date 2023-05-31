@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,6 +14,10 @@ import {faker, tr} from "@faker-js/faker";
 import {Card} from "antd";
 
 import './today-chart.css'
+
+interface TodayChartProps{
+  style?: CSSProperties;
+}
 
 ChartJS.register(
   CategoryScale,
@@ -55,10 +59,10 @@ export const data = {
   ],
 };
 
-export function TodayChartCard() {
+export function TodayChartCard({style={}}:TodayChartProps) {
   return (
-    <Card >
-      <div className='today-chart'>
+    <Card style={style}>
+      <div style={{height:'100%'}}>
         <Line options={options} data={data} />
       </div>
     </Card>

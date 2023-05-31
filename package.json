@@ -21,6 +21,7 @@
     "react-charts": "^3.0.0-beta.54",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
     "react-router-dom": "^6.11.1",
     "react-scripts": "^5.0.1",
     "sass": "^1.62.1",
@@ -55,6 +56,9 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.1",
-    "@types/faker": "^6.6.9"
+    "@types/faker": "^6.6.9",
+    "@types/react-helmet": "^6.1.6",
+    "node-sass": "^7.0.3",
+    "sass-loader": "^13.3.1"
   }
 }
