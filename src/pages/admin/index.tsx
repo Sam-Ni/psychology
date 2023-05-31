@@ -7,6 +7,8 @@ import HomeHeader from "../../components/header/header";
 import HomeFooter from "../../components/footer/footer";
 import CounselorMenu from "../../components/counselor/menu/menu";
 import Sider from "antd/es/layout/Sider";
+import {TUIConversation, TUIConversationList} from "@tencentcloud/chat-uikit-react";
+import {MyConversation} from "../../components/counselor/test-IM/components/MyConversation/MyConversation";
 
 function AdminIndex() {
   const [collapsed, setCollapsed] = useState(false);

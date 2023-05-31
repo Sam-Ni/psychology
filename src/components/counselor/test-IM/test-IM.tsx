@@ -1,45 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import { TUIKit } from '@tencentcloud/chat-uikit-react';
+import React, {useContext, useEffect, useState} from 'react';
+import {TUIChat, TUIConversation, TUIKit} from '@tencentcloud/chat-uikit-react';
 import '@tencentcloud/chat-uikit-react/dist/cjs/index.css';
 import TIM, { ChatSDK } from 'tim-js-sdk/tim-js-friendship';
 import TIMUploadPlugin from 'tim-upload-plugin';
 import generateUserSig, {SDKAPPID} from "./generateUserSig";
-import {isLogin} from "../../../util/common_function";
+import {Button} from "antd";
+import {UserContext} from "../../../Init";
 
 
-// create tim instance && login
-const init = async ():Promise<ChatSDK> => {
-  if (localStorage.getItem('user')) {
-
-  }
-  const userID = localStorage.getItem('user') || 'administrator';
-  const {sdkAppID, userSig} = generateUserSig(userID);
-  return new Promise((resolve, reject) => {
-    const tim = TIM.create({ SDKAppID: sdkAppID });
-    tim?.registerPlugin({ 'tim-upload-plugin': TIMUploadPlugin });
-    const onReady = () => { resolve(tim); };
-    tim.on(TIM.EVENT.SDK_READY, onReady);
-    tim.login({
-      userID: userID,
-      userSig: userSig,
-    });
-  });
-}
 
 
 export default function SampleChat() {
-  const [tim, setTim] = useState<ChatSDK>();
-  useEffect(() => {
-    (async ()=>{
-      const tim = await init()
-      setTim(tim)
-    })()
-  }, [])
+  const {tim} = useContext(UserContext);
+  // useEffect(() => {
+  //   (async ()=>{
+  //     try {
+  //       const tim = await init();
+  //       setTim(tim);
+  //     } catch (e) {
+  //       console.log('tim_error', e);
+  //     }
+  //   })()
+  // }, [])
 
-
+  const onClick = ()=> {
+    const message = tim.createTextMessage({
+      to: 'wek',
+      conversationType: TIM.TYPES.CONV_C2C,
+      payload: {
+        text: 'Hello world!'
+      },
+    });
+    tim.sendMessage(message)
+      .then(res => console.log(res))
+      .catch(e => console.warn('sendMessage error:', e));
+  }
   return (
-    <div style={{height: '100vh',width: '100vw'}}>
-      <TUIKit tim={tim}></TUIKit>
-    </div>
+      <div style={{height: '100vh',width: '100vw'}}>
+        {/*<TUIKit tim={tim}>*/}
+        {/*  <TUIConversation />*/}
+        {/*</TUIKit>*/}
+        {/*<TUIChat/>*/}
+        <Button onClick={onClick}>123</Button>
+      </div>
   );
 }

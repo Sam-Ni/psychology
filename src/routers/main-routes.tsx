@@ -13,6 +13,7 @@ import SupervisorHome from "../pages/supervisor/home/supervisor-home";
 import AdminIndex from "../pages/admin";
 import AdminHome from "../pages/admin/home/admin-home";
 import SampleChat from "../components/counselor/test-IM/test-IM";
+import {MyChat} from "../components/counselor/test-IM/components/MyChat/MyChat";
 
 /*
 主路由
@@ -27,6 +28,7 @@ const MainRoutes = () => {
         <Route index Component={CounselorHome}/>
         <Route path="home" Component={CounselorHome}/>
         <Route path="2" Component={SampleChat}/>
+        <Route path={'chat'} Component={MyChat}/>
       </Route>
       <Route path="/supervisor" Component={SupervisorIndex}>
         <Route index Component={SupervisorHome}/>
@@ -38,7 +40,7 @@ const MainRoutes = () => {
         <Route path="home" Component={AdminHome}/>
         <Route path="2" Component={Content2}/>
       </Route>
-
+      <Route path={'test'} Component={SampleChat}></Route>
     </Routes>
   );
 };
