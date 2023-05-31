@@ -1,6 +1,11 @@
 import React, {useState} from 'react';
-import {Calendar, Card, Rate, Space, Table} from "antd";
+import {Calendar, Card, DatePicker, Input, Rate, Space, Table} from "antd";
 import type { ColumnsType } from 'antd/es/table';
+import {getFakeCounselRecord} from "../../../../util/fake";
+
+interface  RecentTableProps{
+  searchbar?: boolean;
+}
 
 interface DataType {
   key: string;
@@ -52,26 +57,24 @@ const columns = [
   },
 ];
 
-function RecentTable(){
-  const data: DataType[] = [
-    {
-      key:'1', name:'张先生', time:'00:12:54', date:'2020/12/13 00:12:54', star:3, evaluation:'很棒！'
-    },
-    {
-      key:'2', name:'张先生', time:'00:12:54', date:'2020/12/13 00:12:54', star:2, evaluation:'很棒！'
-    },
-    {
-      key:'3', name:'张先生', time:'00:12:54', date:'2020/12/13 00:12:54', star:4, evaluation:'很棒！'
-    },
-    {
-      key:'4', name:'张先生', time:'00:12:54', date:'2020/12/13 00:12:54', star:5, evaluation:'很棒！'
-    },
-  ];
-
+function RecentTable({searchbar=false}:RecentTableProps){
   return(
     <Card>
+      <div>
+        {searchbar?
+          <Space size={"middle"}>
+            <Space direction={"vertical"}>
+              <div>搜索姓名</div>
+              <Input placeholder="输入姓名进行搜索" />
+            </Space>
+            <Space direction={"vertical"}>
+              <div>选择日期</div>
+              <DatePicker/>
+            </Space>
+          </Space>:null}
+      </div>
       <h1>最近咨询记录</h1>
-      <Table columns={columns} dataSource={data}></Table>
+      <Table columns={columns} dataSource={getFakeCounselRecord()}></Table>
     </Card>
   );
 }

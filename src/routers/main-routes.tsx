@@ -13,6 +13,8 @@ import SupervisorHome from "../pages/supervisor/home/supervisor-home";
 import AdminIndex from "../pages/admin";
 import AdminHome from "../pages/admin/home/admin-home";
 import SampleChat from "../components/counselor/test-IM/test-IM";
+import CounselRecord from "../pages/counselor/record/counsel-record";
+import CounselorManagement from "../pages/admin/counselor-management/counselor-management";
 
 /*
 主路由
@@ -25,7 +27,8 @@ const MainRoutes = () => {
       <Route path="/login" Component={LoginIndex}/>
       <Route path="/counselor" Component={CounselorIndex}>
         <Route index Component={CounselorHome}/>
-        <Route path="home" Component={CounselorHome}/>
+        {/*<Route path="home" Component={CounselorHome}/>*/}
+        <Route path="record" Component={CounselRecord}/>
         <Route path="2" Component={SampleChat}/>
       </Route>
       <Route path="/supervisor" Component={SupervisorIndex}>
@@ -36,8 +39,9 @@ const MainRoutes = () => {
       <Route path="/admin" Component={AdminIndex}>
         <Route index Component={AdminHome}/>
         <Route path="home" Component={AdminHome}/>
-        <Route path="2" Component={Content2}/>
+        <Route path="counselor-management" Component={CounselorManagement}/>
       </Route>
+
 
     </Routes>
   );

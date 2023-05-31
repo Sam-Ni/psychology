@@ -38,8 +38,8 @@ export default function SampleChat() {
 
 
   return (
-    <div style={{height: '100vh',width: '100vw'}}>
-      <TUIKit tim={tim}></TUIKit>
-    </div>
+      <div style={{height: '100vh'}}>
+        <TUIKit tim={tim}></TUIKit>
+      </div>
   );
 }

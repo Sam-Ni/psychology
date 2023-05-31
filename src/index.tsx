@@ -1,14 +1,25 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+      import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 import "./index.css"
-
+import {createRoot} from "react-dom/client";
 import MainRoutes from "./routers/main-routes";
+import reportWebVitals from "./reportWebVitals";
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root') as HTMLElement);
+
+root.render(
   <BrowserRouter>
     <MainRoutes />
   </BrowserRouter>,
-  document.getElementById('root')
 );
+
+reportWebVitals();
+
+
+
+// ReactDOM.render(
+//
+//   document.getElementById('root')
+// );

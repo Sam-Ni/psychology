@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Button, Card, Col, Divider, Image, Rate, Row, Space, Statistic} from "antd";
-import {TodayChartCard} from "./today-chart/today-chart-card";
+import {CenterCSS} from "../../../common/common";
 
 function TodayCardAdmin(){
 
@@ -10,9 +10,8 @@ function TodayCardAdmin(){
   const [todayConsultationTime, setTodayConsultationTime] = useState("6:12:30");
 
 
-
   return (
-    <Card className="card-total" style={{width:"100%"}}>
+    <Card style={CenterCSS} bodyStyle={{width:"100%"}}>
       <Row align={"middle"} justify={"space-around"}>
         <Col style={{width: '20%'}}>
           <Statistic title="今日咨询数" value={todayConsultationNum} style={{textAlign:"center"}}/>
@@ -23,9 +22,9 @@ function TodayCardAdmin(){
         <Col style={{width: '20%'}}>
           <Statistic title="今日咨询时长" value={todayConsultationTime} style={{textAlign:"center"}}/>
         </Col>
-        <Col >
-          <Divider type="vertical" style={{height:"150px"}}/>
-        </Col>
+        {/*<Col >*/}
+        {/*  <Divider type="vertical" style={{height:"150px"}}/>*/}
+        {/*</Col>*/}
         {/*<Col style={{width: '50%'}}>*/}
         {/*  <TodayChartCard />*/}
         {/*</Col>*/}

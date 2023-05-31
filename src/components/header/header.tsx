@@ -18,6 +18,8 @@ function HomeHeader() {
     localStorage.removeItem('user');
     navigate('/login');
   }
+
+
   //下拉菜单
   const menu = (
     <Menu theme="dark">
@@ -27,11 +29,10 @@ function HomeHeader() {
     </Menu>
   );
 
-
   return (
     <Header style={{ display: 'flex', alignItems: 'center' }}>
       <div className="demo-logo" />
-      <div className="title">心理健康测试平台</div>
+      <div className="title">心慰——心理健康平台</div>
       <div className="user-div">
 
         <div className="avatar-container">

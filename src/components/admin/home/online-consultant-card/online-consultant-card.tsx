@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Card, Table} from "antd";
 
-import './online-consultant.css'
+import '../../../supervisor/home/online-counselor/online-consultant.css'
 import {getFakeConsultantData} from "../../../../util/fake";
 
 const columns = [
