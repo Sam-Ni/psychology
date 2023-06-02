@@ -3,10 +3,15 @@ import {
   Button, Card, Col, Form, Input, Modal, Radio, Rate, Row, Space, Table, Tabs, TabsProps,
 } from "antd";
 import type { ColumnsType } from 'antd/es/table';
-import {getFakeCounselorMsgs, getFakeCounselorWorkMsgs, getFakeCounselRecord} from "../../../util/fake";
+import {
+  getFakeCounselorMsgs,
+  getFakeCounselorWorkMsgs,
+  getFakeCounselRecord,
+  getFakeSuperviseWorkMsgs
+} from "../../../util/fake";
 import Password from "antd/es/input/Password";
 
-interface CounselorManagementProps{
+interface SupervisorManagementProps{
   searchbar?: boolean;
 }
 
@@ -20,7 +25,7 @@ interface DataType {
   state: string;
 }
 
-const counselorPersonMsgCols = [
+const SupervisorPersonMsgCols = [
   {
     title: '姓名',
     dataIndex: 'name',
@@ -47,7 +52,7 @@ const counselorPersonMsgCols = [
     key: 'email',
   },
   {
-    title: '咨询时长',
+    title: '督导时长',
     dataIndex: 'time',
     key: 'time',
   },
@@ -69,7 +74,7 @@ const counselorPersonMsgCols = [
   },
 ];
 
-const counselorWorkMsgCols = [
+const SupervisorWorkMsgCols = [
   {
     title: '姓名',
     dataIndex: 'name',
@@ -81,27 +86,19 @@ const counselorWorkMsgCols = [
     key: 'identity',
   },
   {
-    title: '绑定督导',
-    dataIndex: 'bindingSupervisor',
-    key: 'bindingSupervisor',
+    title: '绑定咨询师',
+    dataIndex: 'bindingCounselor',
+    key: 'bindingCounselor',
   },
   {
-    title: '总咨询数',
-    dataIndex: 'totalCounselNum',
-    key: 'totalCounselNum',
+    title: '总督导数',
+    dataIndex: 'totalSuperviseNum',
+    key: 'totalSuperviseNum',
   },
   {
-    title: '总咨询时长',
-    dataIndex: 'totalCounselTime',
-    key: 'totalCounselTime',
-  },
-  {
-    title: '平均咨询评级',
-    dataIndex: 'avgCounselLevel',
-    key: 'avgCounselLevel',
-    render: (avgCounselLevel:number) =>(
-      <Rate disabled defaultValue={avgCounselLevel} />
-    )
+    title: '总督导时长',
+    dataIndex: 'totalSuperviseTime',
+    key: 'totalSuperviseTime',
   },
   {
     title: '周值班安排',
@@ -219,7 +216,7 @@ const tabItems: TabsProps['items'] = [
 ];
 
 
-function CounselorManagementCard({searchbar=false}:CounselorManagementProps){
+function SupervisorManagementCard({searchbar=false}:SupervisorManagementProps){
   const [form] = Form.useForm();
   const [open,setOpen] = useState(false);
 
@@ -245,22 +242,22 @@ function CounselorManagementCard({searchbar=false}:CounselorManagementProps){
               <div>搜索姓名</div>
               <Input placeholder="输入姓名进行搜索" />
             </Space>
-            <Button type={"primary"} onClick={()=>setOpen(true)}>新增咨询师</Button>
+            <Button type={"primary"} onClick={()=>setOpen(true)}>新增督导</Button>
           </Space>:null}
       </div>
       <br/>
       <Tabs defaultActiveKey='0'>
         <Tabs.TabPane tab='个人信息' key='0'>
-          <Table columns={counselorPersonMsgCols} dataSource={getFakeCounselorMsgs()}></Table>
+          <Table columns={SupervisorPersonMsgCols} dataSource={getFakeCounselorMsgs()}></Table>
         </Tabs.TabPane>
         <Tabs.TabPane tab='工作信息' key='1'>
-          <Table columns={counselorWorkMsgCols} dataSource={getFakeCounselorWorkMsgs()}></Table>
+          <Table columns={SupervisorWorkMsgCols} dataSource={getFakeSuperviseWorkMsgs()}></Table>
         </Tabs.TabPane>
       </Tabs>
 
 
       <Modal
-        title="新增咨询师"
+        title="新增督导"
         centered
         open={open}
         onOk={handleFinish}
@@ -287,4 +284,4 @@ function CounselorManagementCard({searchbar=false}:CounselorManagementProps){
 }
 
 
-export default CounselorManagementCard;
+export default SupervisorManagementCard;

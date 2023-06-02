@@ -103,3 +103,59 @@ export function getFakeCounselorMsgs(){
     };
   });
 }
+
+export function getFakeCounselorWorkMsgs(){
+  const datalist= Array.from(Array(30).keys());
+
+  return datalist.map(()=> {
+    const randomTime = faker.date.between('1970-01-01', new Date());
+    const formattedTime = dayjs(randomTime).format('HH:mm:ss');
+
+    return {
+      name: fakerZH_CN.person.fullName(),
+      identity: '咨询师',
+      bindingSupervisor: fakerZH_CN.person.fullName(),
+      totalCounselNum: faker.number.int({min: 0, max: 1000}),
+      totalCounselTime: formattedTime,
+      avgCounselLevel: fakerZH_CN.number.int({min: 0, max: 5}),
+      weeklyArrangement: Array.from({ length: 7 }, () => faker.number.int({min: 0, max: 1}))
+
+    };
+  });
+}
+
+export function getFakeSuperviseWorkMsgs(){
+  const datalist= Array.from(Array(30).keys());
+
+  return datalist.map(()=> {
+    const randomTime = faker.date.between('1970-01-01', new Date());
+    const formattedTime = dayjs(randomTime).format('HH:mm:ss');
+
+    return {
+      name: fakerZH_CN.person.fullName(),
+      identity: '咨询师',
+      bindingCounselor: Array.from({length:faker.number.int({min: 1, max: 3})},()=>fakerZH_CN.person.fullName()).join(','),
+      totalSuperviseNum: faker.number.int({min: 0, max: 1000}),
+      totalSuperviseTime: formattedTime,
+      weeklyArrangement: Array.from({ length: 7 }, () => faker.number.int({min: 0, max: 1}))
+
+    };
+  });
+}
+
+//获取某个日期虚假的咨询师和督导人数
+export function getFakeNumsInDay(){
+  return [faker.number.int({min: 0, max: 20}),faker.number.int({min: 0, max: 20})]
+}
+
+export function getFakeNums(){
+  const datalist= Array.from(Array(30).keys());
+
+  return datalist.map((index)=> {
+    return {
+      img: `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`,
+      title: fakerZH_CN.person.fullName()
+    };
+  });
+}
+

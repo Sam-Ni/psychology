@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {Button, Calendar, Card, Col, Space, Typography} from "antd";
+import {Button, Calendar, Card, Col, ConfigProvider, Space, Typography} from "antd";
 import dayjs, { Dayjs } from 'dayjs';
 import {getEngagement} from "../../../../data/fake-data";
 import type { CellRenderInfo } from 'rc-picker/lib/interface';
 import './scheduling-calendar.css';
 import {LeftOutlined, RightOutlined} from '@ant-design/icons';
+import locale from "antd/locale/zh_CN";
 
 function SchedulingCalendar() {
   //当前日期
@@ -24,23 +25,25 @@ function SchedulingCalendar() {
   return (
     <Card>
       <Col>
-        <Calendar className={'my-calendar'}
-          value={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
-          fullscreen={true}
-          cellRender={cellRender}
-          headerRender={({value, type, onChange, onTypeChange}) => {
-            return (
-              <Space style={{padding: 8, justifyContent: 'space-between', width: '100%'}} size={"middle"} >
-                <div className={'calendar-title'}>{getTitle(value)}</div>
-                <Space>
-                  <Button icon={<LeftOutlined />} size={"small"} onClick={() => setSelectedDate(selectedDate.subtract(1, 'month'))}/>
-                  <Button icon={<RightOutlined />} size={"small"} onClick={() => setSelectedDate(selectedDate.add(1, 'month'))}/>
+        <ConfigProvider locale={locale}>
+          <Calendar className={'my-calendar'}
+            value={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            fullscreen={true}
+            cellRender={cellRender}
+            headerRender={({value, type, onChange, onTypeChange}) => {
+              return (
+                <Space style={{padding: 8, justifyContent: 'space-between', width: '100%'}} size={"middle"}>
+                  <div className={'calendar-title'}>{getTitle(value)}</div>
+                  <Space>
+                    <Button icon={<LeftOutlined />} size={"small"} onClick={() => setSelectedDate(selectedDate.subtract(1, 'month'))}/>
+                    <Button icon={<RightOutlined />} size={"small"} onClick={() => setSelectedDate(selectedDate.add(1, 'month'))}/>
+                  </Space>
                 </Space>
-              </Space>
-            )
-          }}
-        />
+              )
+            }}
+          />
+        </ConfigProvider>
       </Col>
     </Card>
   );

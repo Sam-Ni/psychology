@@ -3,7 +3,8 @@ import {
   DesktopOutlined,
   HomeOutlined,
   BarsOutlined,
-  UserOutlined
+  UserOutlined,
+  SolutionOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import {Menu} from "antd";
@@ -21,8 +22,14 @@ function AdminMenu(){
       <Menu.Item key='2' icon={<BarsOutlined />} onClick={() => navigate('record')} >
         咨询记录
       </Menu.Item>
-      <Menu.Item key='3' icon={<UserOutlined />} onClick={() => navigate('counselor-management')} >
+      <Menu.Item key='3' icon={<UserOutlined />} onClick={() => navigate('arrangement-table')} >
+        排版表
+      </Menu.Item>
+      <Menu.Item key='4' icon={<UserOutlined />} onClick={() => navigate('counselor-management')} >
         咨询师管理
+      </Menu.Item>
+      <Menu.Item key='5' icon={<SolutionOutlined />} onClick={() => navigate('supervisor-management')} >
+        督导管理
       </Menu.Item>
     </Menu>
   )

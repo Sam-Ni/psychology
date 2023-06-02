@@ -73,7 +73,7 @@ function RecentTable({searchbar=false}:RecentTableProps){
             </Space>
           </Space>:null}
       </div>
-      <h1>最近咨询记录</h1>
+      <br/>
       <Table columns={columns} dataSource={getFakeCounselRecord()}></Table>
     </Card>
   );

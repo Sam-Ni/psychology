@@ -1,4 +1,4 @@
-import {service} from "./config";
+import service from "./config";
 
 
 export async function login(username: string, password: string): Promise<boolean> {
