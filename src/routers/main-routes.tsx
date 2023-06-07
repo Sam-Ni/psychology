@@ -7,7 +7,7 @@ import CounselorIndex from "../pages/counselor";
 import SupervisorIndex from "../pages/supervisor";
 import Content2 from "../components/content/example/Content2";
 
-import {isLogin} from "../util/common_function";
+import {getRole, isLogin} from "../util/common";
 import CounselorHome from "../pages/counselor/home/counselor-home";
 import SupervisorHome from "../pages/supervisor/home/supervisor-home";
 import AdminIndex from "../pages/admin";
@@ -26,7 +26,7 @@ const MainRoutes = () => {
   return (
     <Routes>
       // need to judge auth
-      <Route path="/" element={ isLogin() ? <Navigate to='/counselor' /> : <Navigate to='login' /> } />
+      <Route path="/" element={ isLogin() ? <Navigate to={'/'+getRole()} /> : <Navigate to='login'/> } />
       <Route path="/login" Component={LoginIndex}/>
       <Route path="/counselor" Component={CounselorIndex}>
         <Route index Component={CounselorHome}/>

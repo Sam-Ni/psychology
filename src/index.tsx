@@ -8,12 +8,19 @@ import "./index.css"
 import MainRoutes from "./routers/main-routes";
 import reportWebVitals from "./reportWebVitals";
 import {Init} from "./Init";
+import { Provider } from 'react-redux'
+import {store,persisStore} from './store'
+import {PersistGate} from 'redux-persist/integration/react'
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <BrowserRouter>
-    <Init />
-  </BrowserRouter>,
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persisStore}>
+      <BrowserRouter>
+        <Init />
+      </BrowserRouter>
+    </PersistGate>
+  </Provider>,
 );
 
 reportWebVitals();

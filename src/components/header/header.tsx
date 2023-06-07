@@ -4,7 +4,11 @@ import "./header.css"
 import {Avatar, Dropdown, Menu} from "antd";
 import {UserOutlined, LogoutOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
-import {isLogin} from "../../util/common_function";
+
+import {clearLoginMsg} from "../../store/actions/login";
+import {store} from "../../store";
+import {logout} from "../../api/login";
+import {getUser} from "../../util/common";
 
 function HomeHeader() {
   const navigate = useNavigate();
@@ -15,8 +19,9 @@ function HomeHeader() {
   //   }
   // })
   const onLogoutClick = () => {
-    localStorage.removeItem('user');
-    navigate('/login');
+    // localStorage.removeItem('user');
+    logout().then(r => {});
+    // navigate('/login');
   }
 
 
@@ -40,7 +45,7 @@ function HomeHeader() {
             <Avatar size={50} icon={<UserOutlined />} />
           </Dropdown>
         </div>
-        <div className="welcome-text">欢迎你，xx</div>
+        <div className="welcome-text">欢迎你，{getUser()}</div>
 
       </div>
     </Header>

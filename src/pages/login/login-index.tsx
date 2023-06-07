@@ -6,29 +6,45 @@ import {Content, Footer, Header} from "antd/es/layout/layout";
 import {Md5} from "ts-md5";
 import {login} from "../../api/login";
 import {useNavigate} from "react-router-dom";
-import {isLogin} from "../../util/common_function";
+import {isLogin} from "../../util/common";
+import {store} from "../../store";
 
 
 function LoginIndex() {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isLogin()) {
-      navigate('/counselor');
-    }
+  // useEffect(() => {
+  //   if (isLogin()) {
+  //     navigate('/counselor');
+  //   }
+  // })
+
+  useEffect(()=>{
+    let unsubscribe  = store.subscribe(() => {
+      if(store.getState().login.hasLogin)
+      {
+        navigate('/'+store.getState().login.role);
+      }
+      return ()=>{
+        unsubscribe();
+      };
+    })
   })
+
   const onFinish = (values: any) => {
     const { username, password } = values;
     const md5_password = Md5.hashStr(password);
-    console.log('Success:', { username, password, md5_password });
+    // console.log('Success:', { username, password, md5_password });
     login(username, password)
       .then(success => {
         // Note: This is code is only for front end test!
-        localStorage.setItem('user', username);
-        navigate('/counselor');
+        // localStorage.setItem('user', username);
+        // navigate('/counselor');
         ////////
         if (success) {
-          navigate('/counselor');
+          // navigate('/counselor');
+
+
         }
       });
   };

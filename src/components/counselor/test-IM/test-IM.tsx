@@ -4,15 +4,12 @@ import '@tencentcloud/chat-uikit-react/dist/cjs/index.css';
 import TIM, { ChatSDK } from 'tim-js-sdk/tim-js-friendship';
 import TIMUploadPlugin from 'tim-upload-plugin';
 import generateUserSig, {SDKAPPID} from "./generateUserSig";
-import {isLogin} from "../../../util/common_function";
+import {getUser, isLogin} from "../../../util/common";
 
 
 // create tim instance && login
 const init = async ():Promise<ChatSDK> => {
-  if (localStorage.getItem('user')) {
-
-  }
-  const userID = localStorage.getItem('user') || 'administrator';
+  const userID = getUser() || 'administrator';
   const {sdkAppID, userSig} = generateUserSig(userID);
   return new Promise((resolve, reject) => {
     const tim = TIM.create({ SDKAppID: sdkAppID });
