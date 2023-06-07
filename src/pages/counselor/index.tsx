@@ -20,7 +20,7 @@ function CounselorIndex() {
       <Layout>
         <Sider theme="light" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
           <CounselorMenu/>
-          {/*<MyConversation />*/}
+          <MyConversation />
         </Sider>
         <Layout>
           <Content style={{padding: "0 20px"}}>
