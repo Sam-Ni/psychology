@@ -2,6 +2,8 @@ import axios from 'axios';
 import QS from 'qs';
 import { message } from 'antd'
 
+axios.defaults.withCredentials=true;
+
 //保存环境变量
 const isPrd = process.env.NODE_ENV == 'production';
 
