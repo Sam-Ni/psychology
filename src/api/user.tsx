@@ -5,7 +5,7 @@ import {getID} from "../util/common";
 
 
 export async function getUser(id: number): Promise<boolean> {
-  const ret = await service.get('/account/getUser/'+getID(), {})
+  const ret = await service.get('/account/'+getID(), {})
     .then(res => {
 
       return true;

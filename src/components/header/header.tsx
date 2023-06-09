@@ -20,8 +20,11 @@ function HomeHeader() {
   // })
   const onLogoutClick = () => {
     // localStorage.removeItem('user');
-    logout().then(r => {});
-    // navigate('/login');
+    logout().then(r => {
+      if(r)
+        navigate('/login');
+    });
+    //
   }
 
 
