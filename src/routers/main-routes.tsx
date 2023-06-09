@@ -18,6 +18,8 @@ import CounselorManagement from "../pages/admin/counselor-management/counselor-m
 import {MyChat} from "../components/counselor/test-IM/components/MyChat/MyChat";
 import SupervisorManagement from "../pages/admin/supervisor-management/supervisor-management";
 import ArrangementTable from "../pages/admin/arrangement-table/arrangement-table";
+import {ConsultMain} from "../components/counselor/test-IM/components/ConsultMain/ConsultMain";
+import {ChatWithDudao} from "../components/counselor/test-IM/components/ChatWithDudao/ChatWithDudao";
 
 /*
 主路由
@@ -33,9 +35,8 @@ const MainRoutes = () => {
         {/*<Route path="home" Component={CounselorHome}/>*/}
         <Route path="record" Component={CounselRecord}/>
         <Route path="2" Component={SampleChat}/>
-        <Route path={'chat'} Component={MyChat}>
-          {/*<Route path={':id'} Component={}/>*/}
-        </Route>
+        <Route path={'chat'} Component={ConsultMain} />
+        <Route path={'chat/:id'} Component={ChatWithDudao}/>
       </Route>
       <Route path="/supervisor" Component={SupervisorIndex}>
         <Route index Component={SupervisorHome}/>
