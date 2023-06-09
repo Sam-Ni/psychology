@@ -8,7 +8,7 @@ import MainRoutes from "./routers/main-routes";
 export const UserContext = React.createContext(null);
 
 const init = async ():Promise<ChatSDK> => {
-  const userID = localStorage.getItem('user') || 'administrator';
+  const userID = localStorage.getItem('user') || 'sam';
   const {sdkAppID, userSig} = generateUserSig(userID);
   return new Promise((resolve, reject) => {
     const tim = TIM.create({ SDKAppID: sdkAppID });
