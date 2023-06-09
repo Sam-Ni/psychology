@@ -33,7 +33,9 @@ const MainRoutes = () => {
         {/*<Route path="home" Component={CounselorHome}/>*/}
         <Route path="record" Component={CounselRecord}/>
         <Route path="2" Component={SampleChat}/>
-        <Route path={'chat'} Component={MyChat}/>
+        <Route path={'chat'} Component={MyChat}>
+          {/*<Route path={':id'} Component={}/>*/}
+        </Route>
       </Route>
       <Route path="/supervisor" Component={SupervisorIndex}>
         <Route index Component={SupervisorHome}/>

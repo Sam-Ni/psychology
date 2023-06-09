@@ -58,7 +58,7 @@ function LoginIndex() {
 
       <Header style={{ display: 'flex', alignItems: 'center' }}>
         <div className="demo-logo" />
-        <div className="title">心理健康测试平台</div>
+        <div className="login-title">心理健康测试平台</div>
       </Header>
 
       <Content style={{ padding: '0 50px' }}>
