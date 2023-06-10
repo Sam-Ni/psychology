@@ -4,7 +4,8 @@ export const setCurrentConversation = data => ({
   data,
 })
 
-export const addAskingDudao = data => ({
+export const addAskingDudao = (B2A, B2C) => ({
   type: 'ADD_ASK_DUDAO',
-  data,
+  B2A,
+  B2C,
 })
