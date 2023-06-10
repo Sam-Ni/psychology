@@ -2,6 +2,12 @@ import {MyChat} from "../MyChat/MyChat";
 import {useContext, useEffect, useState} from "react";
 import TIM, {Conversation} from "tim-js-sdk";
 import {UserContext} from "../../../../../Init";
+import {AskSupervisor} from "../AskSupervisor/AskSupervisor";
+import {useNavigate} from "react-router-dom";
+import {store} from "../../../../../store";
+import {setDatasets} from "react-chartjs-2/dist/utils";
+import {addAskingDudao} from "../../../../../store/actions/conversationContext";
+import useForceUpdate from "antd/es/_util/hooks/useForceUpdate";
 
 function getSupervisorId() {
   return 'xxxx';
@@ -31,13 +37,33 @@ export function ChatWithDudao() {
       })
   }
 
-  useEffect(()=> {
+  const navigate = useNavigate();
+
+  // useEffect(()=> {
+  //   navigate('chat/'+store.getState().conversationContext.currentConversation.conversationID);
+  // })
+  const [inConsult, setInConsult] = useState(false);
+  const onClick = ()=> {
     sendMessage();
+    const ConvID = store.getState().conversationContext.currentConversation.conversationID;
+    store.dispatch(addAskingDudao(ConvID));
+    setInConsult(true);
+  }
+
+  useEffect(()=>{
+    setInConsult(store.getState().conversationContext.askDudaoList.has(
+      store.getState().conversationContext.currentConversation?.conversationID
+    ));
   })
+
+
   return (
-    <div style={{display: "flex"}}>
-      <MyChat />
-      <MyChat conversation={conversation}/>
-    </div>
+    <>
+      <AskSupervisor onClick={onClick}/>
+      <div style={{display: "flex"}}>
+        <MyChat />
+        {inConsult && <MyChat conversation={conversation}/>}
+      </div>
+    </>
   )
 }

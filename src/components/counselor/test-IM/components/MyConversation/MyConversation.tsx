@@ -9,7 +9,7 @@ export function MyConversation() {
   console.log('MyConversation', 'Hello');
   const navigate = useNavigate()
   const onClick = () => {
-    navigate('/counselor/chat');
+    navigate('/counselor/chat/' + store.getState().conversationContext.currentConversation.conversationID);
   }
   return (
     <div onClick={onClick}>
