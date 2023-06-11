@@ -10,12 +10,24 @@ import {useTUIKitContext} from "@tencentcloud/chat-uikit-react/src/context/TUIKi
 import {Conversation} from "tim-js-sdk";
 
 export function MyChat(props) {
-  const {conversation} = props;
+  const {conversation, onlyMessageList } = props;
 
+  if (onlyMessageList) {
+    return (
+      <>
+        <TUIChat conversation={conversation} >
+          <Scrollbars
+            style={{height: '80vh'}}>
+            <TUIMessageList />
+          </Scrollbars>
+        </TUIChat>
+      </>
+    )
+  }
 
   return (
     <>
-      <TUIChat conversation={conversation}>
+      <TUIChat conversation={conversation} >
         <Scrollbars
           style={{height: '80vh'}}>
           <TUIMessageList />

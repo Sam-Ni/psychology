@@ -4,7 +4,7 @@ import TIM, {Conversation} from "tim-js-sdk";
 import {UserContext} from "../../../../../Init";
 import {AskSupervisor} from "../AskSupervisor/AskSupervisor";
 import {store} from "../../../../../store";
-import {addAskingDudao} from "../../../../../store/actions/conversationContext";
+import {addAskingDudao} from "../../../../../store/actions/counselor";
 
 // This is a fake function!!!
 function getSupervisorId() {
@@ -17,14 +17,12 @@ export function ChatWithDudao() {
 
   useEffect(()=>{
     const convContext = store.getState().conversationContext;
+    const counselor = store.getState().counselor;
+    const askDudaoList = counselor.askDudaoList;
     const currentConv = convContext.currentConversation;
     const convID = currentConv?.conversationID;
-    const InConsult = convContext.askDudaoList.has(convID);
-    console.log('chat_effect', InConsult);
-    setInConsult(convContext.askDudaoList.has(convID));
-    const B2C = convContext.askDudaoList.get(convID);
-    console.log('chat_effect_B2C', B2C);
-    setConversation(convContext.askDudaoList.get(convID));
+    setInConsult(askDudaoList.has(convID));
+    setConversation(askDudaoList.get(convID));
   }, [store.getState().conversationContext.currentConversation]);
 
   const sendMessage = ()=> {

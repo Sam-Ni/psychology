@@ -7,6 +7,9 @@ import HomeHeader from "../../components/header/header";
 import HomeFooter from "../../components/footer/footer";
 import CounselorMenu from "../../components/counselor/menu/menu";
 import Sider from "antd/es/layout/Sider";
+import {
+  SupervisorConversation
+} from "../../components/supervisor/IM/component/SupervisorConversation/SupervisorConversation";
 
 function SupervisorIndex() {
   const [collapsed, setCollapsed] = useState(false);
@@ -19,6 +22,7 @@ function SupervisorIndex() {
       <Layout>
         <Sider theme="light" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
           <CounselorMenu/>
+          <SupervisorConversation />
         </Sider>
         <Layout>
           <Content style={{padding: "0 20px"}}>
