@@ -55,7 +55,7 @@ function LoginIndex() {
   };
 
   return (
-    <div>
+    <div style={{height: '100vh', width:'100%'}}>
       <Helmet>
         <title>心慰——登录</title>
         <link rel="icon" href="./icon.png" />
