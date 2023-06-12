@@ -9,9 +9,13 @@ export async function login(username: string, password: string): Promise<boolean
     {params: {username: username, password: password}})
     .then(res => {
       console.log(res);
-      store.dispatch(setLoginMsg(res.data));
-      getUser(store.getState().login.id);
-      return true;
+      if(res.status === 0)
+      {
+        store.dispatch(setLoginMsg(res.data));
+        getUser(store.getState().login.id);
+        return true;
+      }
+      return false;
     })
     .catch(e => {
       console.log(e);
