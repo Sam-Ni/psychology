@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Card, Col, Divider, Image, Rate, Row, Space, Statistic} from "antd";
+import {getCounselorConsultInfo} from "../../../../api/conversation";
 
 function TodayCard(){
 
@@ -10,6 +11,17 @@ function TodayCard(){
   //当前会话数
   const [nowConversationNum, setNowConversationNum] = useState(2);
 
+  useEffect(() => {
+    getCounselorConsultInfo()
+      .then((response) => {
+        setTodayConsultationNum(response.data.todayNum);
+        setTodayConsultationTime(response.data.todayTotal===null?0:response.data.todayTotal);
+        setNowConversationNum(response.data.currentNum);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
 
   return (
