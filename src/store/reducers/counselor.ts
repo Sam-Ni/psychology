@@ -5,12 +5,13 @@ const initialState = {
 const counselor = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_ASK_DUDAO': {
-      console.log('askDudao', state.askDudaoList);
-      const askDudaoList = structuredClone(state.askDudaoList);
-      askDudaoList.set(action.B2A, action.B2C);
+      // console.log('askDudao', state.askDudaoList);
+      // const askDudaoList = structuredClone(state.askDudaoList);
+      // askDudaoList.set(action.B2A, action.B2C);
+      state.askDudaoList.set(action.B2A, action.B2C);
       return {
         ...state,
-        askDudaoList: askDudaoList,
+        askDudaoList: state.askDudaoList,
       }
     }
     default:

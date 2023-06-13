@@ -36,7 +36,7 @@ export function ChatWithCoun() {
     } else {
       setConversation(res);
     }
-  }, [state.conversationContext.currentConversation?.conversationID])
+  }, [state.conversationContext.currentConversation])
 
   return (
     <div style={{display: "flex"}}>

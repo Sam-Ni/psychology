@@ -14,6 +14,7 @@ export function ChatWithDudao() {
   const {tim} = useContext(UserContext);
   const [conversation, setConversation] = useState<Conversation>();
   const [inConsult, setInConsult] = useState(false);
+  const state = store.getState();
 
   useEffect(()=>{
     const convContext = store.getState().conversationContext;
@@ -23,7 +24,7 @@ export function ChatWithDudao() {
     const convID = currentConv?.conversationID;
     setInConsult(askDudaoList.has(convID));
     setConversation(askDudaoList.get(convID));
-  }, [store.getState().conversationContext.currentConversation]);
+  }, [state.conversationContext.currentConversation]);
 
   const sendMessage = ()=> {
     const supervisorId = getSupervisorId();
