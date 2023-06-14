@@ -1,12 +1,9 @@
 import {Button} from "antd";
 import {useNavigate} from "react-router-dom";
+import {store} from "../../../../../store";
 
 export function AskSupervisor(props) {
-  const {currentConversationID} = props;
-  const navigate = useNavigate();
-  const onClick = ()=> {
-    navigate(currentConversationID);
-  }
+  const {onClick} = props;
   return (
     <Button onClick={onClick}>咨询督导</Button>
   )

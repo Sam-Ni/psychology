@@ -4,11 +4,13 @@ import generateUserSig from "./components/counselor/test-IM/generateUserSig";
 import TIMUploadPlugin from "tim-upload-plugin";
 import {TUIConversation, TUIKit} from "@tencentcloud/chat-uikit-react";
 import MainRoutes from "./routers/main-routes";
+import {store} from "./store";
 
 export const UserContext = React.createContext(null);
 
 const init = async ():Promise<ChatSDK> => {
-  const userID = localStorage.getItem('user') || 'sam';
+  // const userID = store.getState().login.id.toString() || 'sam';
+  const userID = 'sam';
   const {sdkAppID, userSig} = generateUserSig(userID);
   return new Promise((resolve, reject) => {
     const tim = TIM.create({ SDKAppID: sdkAppID });

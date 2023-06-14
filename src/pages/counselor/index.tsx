@@ -8,6 +8,7 @@ import HomeFooter from "../../components/footer/footer";
 import CounselorMenu from "../../components/counselor/menu/menu";
 import Sider from "antd/es/layout/Sider";
 import {MyConversation} from "../../components/counselor/test-IM/components/MyConversation/MyConversation";
+import {store} from "../../store";
 
 function CounselorIndex() {
   const [collapsed, setCollapsed] = useState(false);
@@ -21,6 +22,7 @@ function CounselorIndex() {
         <Sider theme="light" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
           <CounselorMenu/>
           <MyConversation />
+          {/*<Button onClick={()=> console.log("current_conversation", store.getState().conversationContext.currentConversation)}>print current conversation</Button>*/}
         </Sider>
         <Layout>
           <Content style={{padding: "0 20px"}}>
