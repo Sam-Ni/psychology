@@ -5,8 +5,6 @@ import {
 import type { ColumnsType } from 'antd/es/table';
 import {
   getFakeCounselorMsgs,
-  getFakeCounselorWorkMsgs,
-  getFakeCounselRecord,
   getFakeSuperviseWorkMsgs
 } from "../../../util/fake";
 import Password from "antd/es/input/Password";
@@ -219,6 +217,8 @@ const tabItems: TabsProps['items'] = [
 function SupervisorManagementCard({searchbar=false}:SupervisorManagementProps){
   const [form] = Form.useForm();
   const [open,setOpen] = useState(false);
+
+  
 
   const handleFinish = (values:any) => {
     form

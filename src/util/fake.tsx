@@ -99,7 +99,8 @@ export function getFakeCounselorMsgs(){
       phone: faker.phone.number(),
       email: faker.internet.email(),
       time: formattedTime,
-      state: faker.number.int({min: 0, max: 1})?'正常':'禁用'
+      state: faker.number.int({min: 0, max: 1})?'正常':'禁用',
+      id: faker.number.int({min: 0, max: 100})
     };
   });
 }

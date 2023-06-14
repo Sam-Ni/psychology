@@ -4,12 +4,12 @@ import "./user-card.css"
 import {OnlineStateDiv} from "../../../common/common";
 import {store} from "../../../../store";
 import {getCounselorConsultInfo} from "../../../../api/conversation";
+import {getCounselorInfo} from "../../../../api/counselor";
 
 function UserCard()
 {
   //评价星数
   const [evaluateStar, setEvaluateStar] = useState(3);
-  //总咨询时长
 
   const [counselorConsultInfo, setCounselorConsultInfo] =
     useState({
@@ -27,7 +27,15 @@ function UserCard()
       .catch((error) => {
         console.log(error);
       });
+    getCounselorInfo()
+      .then((response) => {
+        setEvaluateStar(response.data.rating);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
+
 
   return (
 
@@ -49,7 +57,7 @@ function UserCard()
               </Col>
             </Row>
             <Row>我的综合评价</Row>
-            <Row><Rate disabled defaultValue={evaluateStar} /></Row>
+            <Row><Rate disabled value={evaluateStar}/></Row>
             <Row>
               <Button type="primary" size="small">咨询设置</Button>
             </Row>

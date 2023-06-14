@@ -1,10 +1,11 @@
-import React, {Component, useRef, useState} from 'react';
+import React, {Component, createContext, useEffect, useRef, useState} from 'react';
 import {
-  Button, Card, Col, Form, Input, Modal, Radio, Rate, Row, Space, Table, Tabs, TabsProps,
+  Button, Card, Col, Form, Input, Modal, Radio, Rate, Row, Select, Space, Table, Tabs, TabsProps,
 } from "antd";
 import type { ColumnsType } from 'antd/es/table';
 import {getFakeCounselorMsgs, getFakeCounselorWorkMsgs, getFakeCounselRecord} from "../../../util/fake";
 import Password from "antd/es/input/Password";
+import {getCounselorInfo} from "../../../api/supervisor";
 
 interface CounselorManagementProps{
   searchbar?: boolean;
@@ -20,115 +21,7 @@ interface DataType {
   state: string;
 }
 
-const counselorPersonMsgCols = [
-  {
-    title: '姓名',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: '性别',
-    dataIndex: 'sex',
-    key: 'sex',
-  },
-  {
-    title: '用户名',
-    dataIndex: 'username',
-    key: 'username',
-  },
-  {
-    title: '手机号',
-    dataIndex: 'phone',
-    key: 'phone',
-  },
-  {
-    title: '邮箱',
-    dataIndex: 'email',
-    key: 'email',
-  },
-  {
-    title: '咨询时长',
-    dataIndex: 'time',
-    key: 'time',
-  },
-  {
-    title: '账号状态',
-    dataIndex: 'state',
-    key: 'state',
-  },
-  {
-    title: '操作',
-    key: 'action',
-    render: () => (
-      <Space size="middle">
-        <Button>修改</Button>
-        <Button>修改排班</Button>
-        <Button>禁用</Button>
-      </Space>
-    ),
-  },
-];
 
-const counselorWorkMsgCols = [
-  {
-    title: '姓名',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: '身份',
-    dataIndex: 'identity',
-    key: 'identity',
-  },
-  {
-    title: '绑定督导',
-    dataIndex: 'bindingSupervisor',
-    key: 'bindingSupervisor',
-  },
-  {
-    title: '总咨询数',
-    dataIndex: 'totalCounselNum',
-    key: 'totalCounselNum',
-  },
-  {
-    title: '总咨询时长',
-    dataIndex: 'totalCounselTime',
-    key: 'totalCounselTime',
-  },
-  {
-    title: '平均咨询评级',
-    dataIndex: 'avgCounselLevel',
-    key: 'avgCounselLevel',
-    render: (avgCounselLevel:number) =>(
-      <Rate disabled defaultValue={avgCounselLevel} />
-    )
-  },
-  {
-    title: '周值班安排',
-    dataIndex: 'weeklyArrangement',
-    key: 'weeklyArrangement',
-    render: (weeklyArrangement:boolean[]) =>(
-      <Space>
-        {weeklyArrangement[0]?<div>{'周一'}</div>:''}
-        {weeklyArrangement[1]?<div>{'周二'}</div>:''}
-        {weeklyArrangement[2]?<div>{'周三'}</div>:''}
-        {weeklyArrangement[3]?<div>{'周四'}</div>:''}
-        {weeklyArrangement[4]?<div>{'周五'}</div>:''}
-        {weeklyArrangement[5]?<div>{'周六'}</div>:''}
-        {weeklyArrangement[6]?<div>{'周日'}</div>:''}
-      </Space>
-    )
-  },
-  {
-    title: '操作',
-    key: 'action',
-    render: () => (
-      <Space size="middle">
-        <Button>修改</Button>
-      </Space>
-    ),
-  },
-];
 
 const personForm: React.ReactNode=(
   <Row>
@@ -220,11 +113,136 @@ const tabItems: TabsProps['items'] = [
 
 
 function CounselorManagementCard({searchbar=false}:CounselorManagementProps){
-  const [form] = Form.useForm();
-  const [open,setOpen] = useState(false);
+  //添加咨询师窗口
+  const [addForm] = Form.useForm();
+  const [openAddModel,setOpenAddModel] = useState(false);
+
+  //修改串口
+  const [editForm] = Form.useForm();
+  const [openEditModel,setOpenEditModel] = useState(false);
+
+  const [selectedCounselorID, setSelectedCounselorID] = useState(1);
+
+  const [supervisorSelectList, setSupervisorSelectList] = useState([]);
+
+  const counselorPersonMsgCols = [
+    {
+      title: '姓名',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: '性别',
+      dataIndex: 'sex',
+      key: 'sex',
+    },
+    {
+      title: '用户名',
+      dataIndex: 'username',
+      key: 'username',
+    },
+    {
+      title: '手机号',
+      dataIndex: 'phone',
+      key: 'phone',
+    },
+    {
+      title: '邮箱',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: '咨询时长',
+      dataIndex: 'time',
+      key: 'time',
+    },
+    {
+      title: '账号状态',
+      dataIndex: 'state',
+      key: 'state',
+    },
+    {
+      title: '操作',
+      dataIndex: 'id',
+      key: 'action',
+      render: (id) => (
+          <Space size="middle">
+              <Button onClick={()=>{
+                setSelectedCounselorID(id);
+                setOpenEditModel(true);
+              }}>
+                修改
+              </Button>
+              <Button>修改排班</Button>
+              <Button>禁用</Button>
+          </Space>
+      ),
+    },
+  ];
+
+  const counselorWorkMsgCols = [
+    {
+      title: '姓名',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: '身份',
+      dataIndex: 'identity',
+      key: 'identity',
+    },
+    {
+      title: '绑定督导',
+      dataIndex: 'bindingSupervisor',
+      key: 'bindingSupervisor',
+    },
+    {
+      title: '总咨询数',
+      dataIndex: 'totalCounselNum',
+      key: 'totalCounselNum',
+    },
+    {
+      title: '总咨询时长',
+      dataIndex: 'totalCounselTime',
+      key: 'totalCounselTime',
+    },
+    {
+      title: '平均咨询评级',
+      dataIndex: 'avgCounselLevel',
+      key: 'avgCounselLevel',
+      render: (avgCounselLevel:number) =>(
+        <Rate disabled defaultValue={avgCounselLevel} />
+      )
+    },
+    {
+      title: '周值班安排',
+      dataIndex: 'weeklyArrangement',
+      key: 'weeklyArrangement',
+      render: (weeklyArrangement:boolean[]) =>(
+        <Space>
+          {weeklyArrangement[0]?<div>{'周一'}</div>:''}
+          {weeklyArrangement[1]?<div>{'周二'}</div>:''}
+          {weeklyArrangement[2]?<div>{'周三'}</div>:''}
+          {weeklyArrangement[3]?<div>{'周四'}</div>:''}
+          {weeklyArrangement[4]?<div>{'周五'}</div>:''}
+          {weeklyArrangement[5]?<div>{'周六'}</div>:''}
+          {weeklyArrangement[6]?<div>{'周日'}</div>:''}
+        </Space>
+      )
+    },
+    {
+      title: '操作',
+      key: 'action',
+      render: () => (
+        <Space size="middle">
+          <Button>修改</Button>
+        </Space>
+      ),
+    },
+  ];
 
   const handleFinish = (values:any) => {
-    form
+    addForm
       .validateFields()
       .then((values) => {
         // form.resetFields();
@@ -236,6 +254,23 @@ function CounselorManagementCard({searchbar=false}:CounselorManagementProps){
       });
   };
 
+  useEffect(()=>{
+    getCounselorInfo()
+      .then((response) => {
+        let newList = [];
+        console.log("123456"+JSON.stringify(response));
+        console.log("123456"+response.data);
+        let r:any = response;
+        r.items.forEach((item)=>{
+          newList.push({value: item.id, label: `${item.name} (${item.id})`})
+        });
+        setSupervisorSelectList(newList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },[])
+
   return(
     <Card>
       <div>
@@ -245,7 +280,7 @@ function CounselorManagementCard({searchbar=false}:CounselorManagementProps){
               <div>搜索姓名</div>
               <Input placeholder="输入姓名进行搜索" />
             </Space>
-            <Button type={"primary"} onClick={()=>setOpen(true)}>新增咨询师</Button>
+            <Button type={"primary"} onClick={()=>setOpenAddModel(true)}>新增咨询师</Button>
           </Space>:null}
       </div>
       <br/>
@@ -258,19 +293,18 @@ function CounselorManagementCard({searchbar=false}:CounselorManagementProps){
         </Tabs.TabPane>
       </Tabs>
 
-
       <Modal
         title="新增咨询师"
         centered
-        open={open}
+        open={openAddModel}
         onOk={handleFinish}
-        onCancel={() => setOpen(false)}
+        onCancel={() => setOpenAddModel(false)}
         width={800}
         okText={"确认"}
         cancelText={"取消"}
       >
         <Form
-          form={form}
+          form={addForm}
           name="basic"
           labelCol={{ span: 6 }}
           wrapperCol={{ span: 22 }}
@@ -282,6 +316,56 @@ function CounselorManagementCard({searchbar=false}:CounselorManagementProps){
           <Tabs defaultActiveKey="1" items={tabItems}/>
         </Form>
       </Modal>
+
+      <Modal title='修改咨询师信息' centered open={openEditModel} okText={"确认"} width={800}
+             cancelText={"取消"} onOk={()=>{setOpenEditModel(false)}}
+              onCancel={()=>{setOpenEditModel(false)}}>
+        <Form
+          form={editForm}
+          name="basic"
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 22 }}
+          layout={"vertical"}
+          initialValues={{ remember: false }}
+          autoComplete="off"
+          requiredMark={false}
+        >
+          <Row>
+            <Col span={12}>
+              <Form.Item label="姓名" name="name" rules={[{ required: true, message: '请输入姓名!' }]}>
+                <Input placeholder={"请输入姓名"}/>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="督导" name="superviors" rules={[{ required: true, message: '请选择督导!' }]}>
+                <Select
+                  labelInValue
+                  mode="multiple"
+                  style={{ width: '100%' }}
+                  placeholder="Please select"
+                  options={supervisorSelectList}
+                  optionLabelProp="label"
+                  maxTagCount="responsive"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Form.Item label="排班" name="arrange" rules={[{ required: true, message: '请选择排班!' }]}>
+            <Select
+              labelInValue
+              mode="multiple"
+              style={{ width: '100%' }}
+              placeholder="Please select"
+              options={[{value:1, label:"周一"},{value:2, label:"周二"},{value:3, label:"周三"},{value:4, label:"周四"},{value:5, label:"周五"},{value:6, label:"周六"},{value:7, label:"周日"}]}
+              optionLabelProp="label"
+              maxTagCount="responsive"
+              
+            />
+          </Form.Item>
+        </Form>
+
+      </Modal>
+
     </Card>
   );
 }
