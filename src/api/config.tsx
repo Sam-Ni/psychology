@@ -1,6 +1,8 @@
 import axios from 'axios';
 import QS from 'qs';
 import { message } from 'antd'
+import {store} from "../store";
+import {clearLoginMsg} from "../store/actions/login";
 
 axios.defaults.withCredentials=true;
 
@@ -38,6 +40,12 @@ service.interceptors.response.use(response => {
         break;
       case 403:
         //token过期处理方法
+        break;
+      case 500:
+        //没有权限处理方法
+        // store.dispatch(clearLoginMsg());
+        // history.
+        message.error(response.data.msg);
         break;
       default:
         message.error(response.data.msg);

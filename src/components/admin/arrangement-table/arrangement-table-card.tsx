@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Avatar, Button, Calendar, Card, ConfigProvider, Layout, List, Space, Table, Tabs} from "antd";
 import {Content} from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
@@ -13,10 +13,30 @@ import 'dayjs/locale/zh-cn';
 import locale from 'antd/locale/zh_CN';
 import {getFakeNums, getFakeNumsInDay} from "../../../util/fake";
 import {PaginationConfig, PaginationPosition} from "antd/es/pagination/Pagination";
+import {
+  getCounselorArrangeNumsByMonth, getCounselorListByDay,
+  getSupervisorArrangeNumsByMonth, getSupervisorListByDay
+} from "../../../api/arrange";
 
 function ArrangementTableCard()
 {
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
+
+  const [counselorArrangeNums, setCounselorArrangeNums] = useState([]);
+  const [supervisorArrangeNums, setSupervisorArrangeNums] = useState([]);
+
+  const [counselorList,setCounselorList] = useState([]);
+  const [supervisorList,setSupervisorList] = useState([]);
+
+  //刷新冗余参数
+  const [refresh, setRefresh] = useState(false);
+
+  useEffect(() => {
+    refresh && setTimeout(() => setRefresh(false))
+  }, [refresh])
+
+  const doRefresh = () => setRefresh(true);
+
 
   function getNumsInDay(value:Dayjs){
     return getFakeNumsInDay();
@@ -24,12 +44,12 @@ function ArrangementTableCard()
 
   const dateCellRender = (value: Dayjs) => {
     let shouldRender = value.toDate().getMonth()==selectedDate.toDate().getMonth();
-    let nums = getNumsInDay(value);
+    let nowIndex = value.toDate().getDate()-1;
 
     return (
       <Space direction={"vertical"} align={"center"} style={{width:"100%"}}>
-        <div className={"arrange-table-cell"}>{shouldRender?("咨询师："+ nums[0]):''}</div>
-        <div className={"arrange-table-cell"}>{shouldRender?("督导："+ nums[1]):''}</div>
+        <div className={"arrange-table-cell"}>{shouldRender?("咨询师："+ counselorArrangeNums[nowIndex]):''}</div>
+        <div className={"arrange-table-cell"}>{shouldRender?("督导："+ supervisorArrangeNums[nowIndex]):''}</div>
         <br/>
       </Space>
     );
@@ -58,7 +78,40 @@ function ArrangementTableCard()
     throw new Error('Invalid weekday number!');
   }
 
+  function mouthChangeHandler(date:dayjs.Dayjs){
+    setCounselorArrangeNums(getCounselorArrangeNumsByMonth(date));
+    setSupervisorArrangeNums(getSupervisorArrangeNumsByMonth(date));
+    doRefresh();
+  }
+
+  //切换到下一个月
+  function toLastMouth(){
+    let newDate = selectedDate.subtract(1, 'month');
+    mouthChangeHandler(newDate);
+    setSelectedDate(newDate);
+  }
+
+  //切换到上一个月
+  function toNextMouth(){
+    let newDate = selectedDate.add(1, 'month');
+    mouthChangeHandler(newDate);
+    setSelectedDate(newDate);
+  }
+
   const pageConfig:PaginationConfig = {position:'bottom',align:'center'}
+
+  useEffect(()=>{
+    setCounselorArrangeNums(getCounselorArrangeNumsByMonth(dayjs()));
+    setSupervisorArrangeNums(getSupervisorArrangeNumsByMonth(dayjs()));
+
+    setCounselorList(getCounselorListByDay(dayjs()));
+  },[])
+
+  useEffect(()=>{
+    setCounselorList(getCounselorListByDay(selectedDate));
+    setSupervisorList(getSupervisorListByDay(selectedDate));
+    doRefresh();
+  },[selectedDate])
 
   return(
     <Card>
@@ -75,8 +128,8 @@ function ArrangementTableCard()
                   <Space style={{padding: 8, justifyContent: 'space-between', width: '100%'}} size={"middle"} >
                     <div className={'calendar-title'}>{getTitle(value)}</div>
                     <Space>
-                      <Button icon={<LeftOutlined />} size={"small"} onClick={() => setSelectedDate(selectedDate.subtract(1, 'month'))}/>
-                      <Button icon={<RightOutlined />} size={"small"} onClick={() => setSelectedDate(selectedDate.add(1, 'month'))}/>
+                      <Button icon={<LeftOutlined />} size={"small"} onClick={toLastMouth}/>
+                      <Button icon={<RightOutlined />} size={"small"} onClick={toNextMouth}/>
                     </Space>
                   </Space>
                 )
@@ -93,13 +146,13 @@ function ArrangementTableCard()
               <Button type={"link"} icon={<PlusOutlined />}>添加咨询师</Button>
               <List
                 itemLayout="horizontal"
-                dataSource={getFakeNums()}
+                dataSource={counselorList}
                 pagination={pageConfig}
                 renderItem={(item, index) => (
                   <List.Item>
                     <List.Item.Meta
-                      avatar={<Avatar src={item.img} />}
-                      title={item.title}
+                      avatar={<Avatar src={item.avatar} />}
+                      title={item.name}
                     />
                     <Button icon={<DeleteOutlined />} danger type={"text"}/>
                   </List.Item>
@@ -110,13 +163,13 @@ function ArrangementTableCard()
               <Button type={"link"} icon={<PlusOutlined />}>添加督导</Button>
               <List
                 itemLayout="horizontal"
-                dataSource={getFakeNums()}
+                dataSource={supervisorList}
                 pagination={pageConfig}
                 renderItem={(item, index) => (
                   <List.Item>
                     <List.Item.Meta
-                      avatar={<Avatar src={item.img} />}
-                      title={item.title}
+                      avatar={<Avatar src={item.avatar} />}
+                      title={item.name}
                     />
                     <Button icon={<DeleteOutlined />} danger type={"text"}/>
                   </List.Item>

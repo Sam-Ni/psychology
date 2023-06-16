@@ -22,7 +22,6 @@ interface DataType {
 }
 
 
-
 const personForm: React.ReactNode=(
   <Row>
     <Col span={12}>

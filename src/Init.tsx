@@ -10,7 +10,7 @@ export const UserContext = React.createContext(null);
 
 const init = async ():Promise<ChatSDK> => {
   // const userID = store.getState().login.id.toString() || 'sam';
-  const userID = 'sam';
+  const userID = 'xxxx';
   const {sdkAppID, userSig} = generateUserSig(userID);
   return new Promise((resolve, reject) => {
     const tim = TIM.create({ SDKAppID: sdkAppID });

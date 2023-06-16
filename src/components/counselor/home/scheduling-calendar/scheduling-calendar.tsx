@@ -31,12 +31,11 @@ function SchedulingCalendar() {
        .then(value => {
          let newDateList = new Set<string>();
          value.data.forEach((item) => {
-           let date = dayjs().year(item.year).month(item.month).date(item.day);
+           let date = dayjs().year(item.year).month(item.month-1).date(item.day);
            newDateList.add(date.format(formatStr));
          });
          setArrangementList(new Set<string>([...arrangementList,...newDateList]));
        });
-     // console.log(arrangementList);
   }
 
   //切换到下一个月
