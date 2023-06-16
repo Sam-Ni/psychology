@@ -52,13 +52,13 @@ export function ChatWithDudao() {
         setConversation(conv2Dudao);
         store.dispatch(addAskingDudao(B2A, conv2Dudao));
         setInConsult(true);
-      })
+    })
   }
 
   return (
     <>
-      <AskSupervisor onClick={onClick}/>
       <div style={{display: "flex"}}>
+        <AskSupervisor requestAskDudao={onClick} inConsult={inConsult}/>
         <MyChat />
         {inConsult && <MyChat conversation={conversation}/>}
       </div>
