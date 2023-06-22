@@ -1,0 +1,1 @@
+import{__assign as r}from"tslib";import{jsx as o}from"react/jsx-runtime";function t(t){var e=t.className,n=t.onClick,c=t.children;return o("div",r({role:"button",tabIndex:0,className:"model ".concat(e),onClick:n},{children:c}))}export{t as Model};

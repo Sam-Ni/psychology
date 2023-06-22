@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("tslib"),r=require("react/jsx-runtime");exports.Model=function(t){var s=t.className,i=t.onClick,n=t.children;return r.jsx("div",e.__assign({role:"button",tabIndex:0,className:"model ".concat(s),onClick:i},{children:n}))};
