@@ -17,6 +17,7 @@ import './today-chart.css'
 
 interface TodayChartProps{
   style?: CSSProperties;
+  dataList :number[];
 }
 
 ChartJS.register(
@@ -47,19 +48,21 @@ export const options = {
 const labels = ['00:00', '2:00', '4:00', '6:00', '8:00', '10:00', '12:00',
                         '14:00', '16:00', '18:00', '20:00', '22:00', '24:00'];
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: '访问人数',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-  ],
-};
 
-export function TodayChartCard({style={}}:TodayChartProps) {
+
+export function TodayChartCard({style={},dataList}:TodayChartProps) {
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: '访问人数',
+        data: dataList,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+    ],
+  };
+
   return (
     <Card style={style}>
       <div style={{height:'100%'}}>

@@ -20,6 +20,8 @@ import {CSSProperties} from "react";
 
 interface LastWeekChartProps{
   style?: CSSProperties;
+  labels: string[];
+  dataList: number[];
 }
 
 ChartJS.register(
@@ -47,21 +49,19 @@ export const options = {
   aspectRatio: 5,
 };
 
-const labels = getDateOfLastSevenDays();
+export function LastWeekConsult({style={},labels,dataList}:LastWeekChartProps) {
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: '访问人数',
+        data: dataList,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+    ],
+  };
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: '访问人数',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-  ],
-};
-
-export function LastWeekConsult({style={}}:LastWeekChartProps) {
   return (
     <Card style={style}>
         <Line options={options} data={data} />

@@ -21,7 +21,7 @@ function SupervisorHome()
             <UserCard />
             <br/>
             <TodayCard />
-            <OnlineCounselor title={'在线咨询师'} style={{marginTop:'20px'}} />
+            {/*<OnlineCounselor title={'在线咨询师'} style={{marginTop:'20px'}} />*/}
           </Col>
           <Col style={{width:"60%", height:"100%"}}>
             <SchedulingCalendar />

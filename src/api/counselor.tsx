@@ -7,6 +7,28 @@ export function getCounselorInfo(id=getID()){
     {params:{id: id}});
 }
 
+export function getCounselorList(page = 1,size = 1){
+  return service.get('/counselor/list',
+    {params:{
+        page:page,
+        size:size,
+        order:'id asc'
+      }});
+}
+
+export function getCounselorWorkInfoList(page = 1,size = 1){
+  return service.get('/account/counselors',
+    {params:{
+        page:page,
+        size:size,
+        order:'id asc'
+      }});
+}
+
+export function insertCounselor(data:any){
+  
+}
+
 //获取可用督导列表
 export function getAvailableDudaoList(id=getID()) {
   return service.get('/supervisor/available',

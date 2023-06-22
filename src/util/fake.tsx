@@ -86,7 +86,7 @@ export function getFakeCounselRecord(){
 
 //获得虚假咨询师信息
 export function getFakeCounselorMsgs(){
-  const datalist= Array.from(Array(30).keys());
+  const datalist= Array.from(Array(10).keys());
 
   return datalist.map(()=> {
     const randomTime = faker.date.between('1970-01-01', new Date());
