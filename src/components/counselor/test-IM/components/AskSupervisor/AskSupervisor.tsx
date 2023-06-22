@@ -2,11 +2,19 @@ import {Button, Col, Divider, Form, Input, Modal, Row, Select, Space, Statistic}
 import {useNavigate} from "react-router-dom";
 import {store} from "../../../../../store";
 import './styles/ask-supervisor.css';
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import formatters from "chart.js/dist/core/core.ticks";
-import {UserContext} from "../../../../../Init";
 import {askDudao, getAvailableDudaoList, sendMessage} from "../../../../../api/counselor";
 import {getID} from "../../../../../util/common";
+import {useStopwatch} from "react-timer-hook";
+import {addConsultTime} from "../../../../../store/actions/consultTime";
+import {useTim} from "../../../../../util/tim";
+
+interface ConsultTimeProps {
+  hours: number,
+  minutes: number,
+  seconds: number,
+}
 
 export function AskSupervisor(props) {
   const {inConsult} = props;
@@ -14,8 +22,40 @@ export function AskSupervisor(props) {
   const [askOpen, setAskOpen] = useState(false)
   const [finishForm] = Form.useForm();
   const [askForm] = Form.useForm();
-  const {tim} = useContext(UserContext);
+  const {tim} = useTim();
   const [supervisorSelectList, setSupervisorSelectList] = useState([]);
+  const state = store.getState();
+  const [consultTime, setConsultTime]
+    = useState<ConsultTimeProps>({hours: 0, minutes: 0, seconds: 0});
+
+
+  useEffect(()=> {
+    const consultTimeMap = state.consultTime.consultTimeMap;
+    const currentConversation = state.conversationContext.currentConversation;
+    let interval = null;
+    let startConsultTime = null;
+    // already registered
+    if (currentConversation && consultTimeMap.has(currentConversation.conversationID)) {
+      startConsultTime = consultTimeMap.get(currentConversation.conversationID);
+    } else if (currentConversation) {
+      startConsultTime = new Date().getTime();
+      store.dispatch(addConsultTime(currentConversation.conversationID, startConsultTime));
+    }
+    interval = setInterval(()=> {
+      const now = new Date().getTime();
+      const diff = Math.floor((now - startConsultTime) / 1000);
+      const hours = Math.floor(diff / 3600);
+      const minutes = Math.floor(diff % 3600 / 60);
+      const seconds = Math.floor(diff % 60);
+      setConsultTime(
+        {hours: hours,
+          minutes: minutes,
+          seconds: seconds});
+    })
+    return () => clearInterval(interval);
+    // setConsultTime({seconds: seconds, hours: hours, minutes: minutes});
+  }, [state.conversationContext.currentConversation]);
+
   const onFinishOk = ()=>{
     finishForm.validateFields()
       .then((values)=> {
@@ -80,7 +120,7 @@ export function AskSupervisor(props) {
           <Divider style={{color:"black"}}/>
         </Row>
         <Row style={{ height:"60%"}}>
-          <ConsultInformation consultTime={1}/>
+          <ConsultInformation consultTime={consultTime}/>
         </Row>
         <Row>
           <Divider style={{color:"black"}}/>
@@ -170,11 +210,27 @@ function FangkeInformation(props) {
 
 function ConsultInformation(props) {
   const { consultTime } = props;
+  const {hours, minutes, seconds} = consultTime;
   return (
-    <div>
+    <div style={{textAlign: 'center'}}>
       <h1>正在咨询中</h1>
-      <div style={{padding:'8px'}}></div>
-      <Statistic title={'已咨询时间'} value={consultTime} style={{textAlign:"center"}} />
+      <div style={{padding:'8px', textAlign: 'center'}}></div>
+      <div>已咨询时间</div>
+      <div style={{padding: '8px'}}></div>
+      <div>
+        <MyStopwatch hours={hours} minutes={minutes} seconds={seconds}/>
+      </div>
     </div>
   )
+}
+function MyStopwatch(props) {
+  const {hours, minutes, seconds} = props;
+
+  return (
+    <div style={{textAlign: 'center'}}>
+      <div style={{fontSize: '20px'}}>
+        <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+      </div>
+    </div>
+  );
 }

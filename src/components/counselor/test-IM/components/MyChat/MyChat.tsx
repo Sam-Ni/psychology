@@ -1,5 +1,4 @@
 import {TUIChat, TUIKit, TUIMessageInput, TUIMessageList} from "@tencentcloud/chat-uikit-react";
-import {UserContext} from "../../../../../Init";
 import {useContext, useRef, useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Scrollbars from "react-custom-scrollbars-2";

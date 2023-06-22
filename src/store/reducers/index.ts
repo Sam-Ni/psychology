@@ -5,6 +5,7 @@ import user from "./user";
 import conversationContext from "./conversationContext";
 import counselor from "./counselor";
 import supervisor from "./supervisor";
+import consultTime from "./consultTime";
 
 const rootReducer = combineReducers({
   login,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   conversationContext,
   counselor,
   supervisor,
+  consultTime,
 })
 
 

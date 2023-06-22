@@ -6,7 +6,6 @@ import {store} from "../../../../../store";
 import {setCurrentConversation} from "../../../../../store/actions/conversationContext";
 
 export function MyConversation() {
-  console.log('MyConversation', 'Hello');
   const navigate = useNavigate()
   const onClick = () => {
     navigate('/counselor/chat/');

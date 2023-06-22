@@ -1,17 +1,17 @@
 import {MyChat} from "../MyChat/MyChat";
 import {useContext, useEffect, useState} from "react";
 import TIM, {Conversation} from "tim-js-sdk";
-import {UserContext} from "../../../../../Init";
 import {AskSupervisor} from "../AskSupervisor/AskSupervisor";
 import {store} from "../../../../../store";
 import {addAskingDudao} from "../../../../../store/actions/counselor";
+import {useTim} from "../../../../../util/tim";
 
 // This is a fake function!!!
 function getSupervisorId() {
   return 'xxxx';
 }
 export function ChatWithDudao() {
-  const {tim} = useContext(UserContext);
+  const { tim } = useTim();
   const [conversation, setConversation] = useState<Conversation>();
   const [inConsult, setInConsult] = useState(false);
   const state = store.getState();

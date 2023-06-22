@@ -3,8 +3,8 @@ import {useContext, useEffect, useState} from "react";
 import {Conversation} from "tim-js-sdk";
 import {Button} from "antd";
 import {store} from "../../../../../store";
-import {UserContext} from "../../../../../Init";
 import {addGroup} from "../../../../../store/actions/supervisor";
+import {useTim} from "../../../../../util/tim";
 
 // This is a fake function!!
 const getGroupConversationID = ()=>{
@@ -13,7 +13,7 @@ const getGroupConversationID = ()=>{
 
 export function ChatWithCoun() {
   const [conversation, setConversation] = useState<Conversation>();
-  const {tim} = useContext(UserContext);
+  const { tim } = useTim();
   const state = store.getState();
   const [loading, setLoading] = useState(false);
   useEffect(()=>{
