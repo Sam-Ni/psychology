@@ -5,7 +5,9 @@ import {
 import type { ColumnsType } from 'antd/es/table';
 import {getFakeCounselorMsgs, getFakeCounselorWorkMsgs, getFakeCounselRecord} from "../../../util/fake";
 import Password from "antd/es/input/Password";
-import {getCounselorInfo} from "../../../api/supervisor";
+import {getSupervisorList} from "../../../api/supervisor";
+import {getCounselorList, getCounselorWorkInfoList} from "../../../api/counselor";
+import {faker, fakerZH_CN} from "@faker-js/faker";
 
 interface CounselorManagementProps{
   searchbar?: boolean;
@@ -112,11 +114,16 @@ const tabItems: TabsProps['items'] = [
 
 
 function CounselorManagementCard({searchbar=false}:CounselorManagementProps){
+  const [counselorBasicList, setCounselorBasicList] = useState([]);
+  const [counselorWorkInfoList, setCounselorWorkInfoList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [total, setTotal] = useState(1);
+
   //添加咨询师窗口
   const [addForm] = Form.useForm();
   const [openAddModel,setOpenAddModel] = useState(false);
 
-  //修改串口
+  //修改窗口
   const [editForm] = Form.useForm();
   const [openEditModel,setOpenEditModel] = useState(false);
 
@@ -217,17 +224,17 @@ function CounselorManagementCard({searchbar=false}:CounselorManagementProps){
       title: '周值班安排',
       dataIndex: 'weeklyArrangement',
       key: 'weeklyArrangement',
-      render: (weeklyArrangement:boolean[]) =>(
-        <Space>
-          {weeklyArrangement[0]?<div>{'周一'}</div>:''}
-          {weeklyArrangement[1]?<div>{'周二'}</div>:''}
-          {weeklyArrangement[2]?<div>{'周三'}</div>:''}
-          {weeklyArrangement[3]?<div>{'周四'}</div>:''}
-          {weeklyArrangement[4]?<div>{'周五'}</div>:''}
-          {weeklyArrangement[5]?<div>{'周六'}</div>:''}
-          {weeklyArrangement[6]?<div>{'周日'}</div>:''}
-        </Space>
-      )
+      // render: (weeklyArrangement:boolean[]) =>(
+      //   <Space>
+      //     {weeklyArrangement[0]?<div>{'周一'}</div>:''}
+      //     {weeklyArrangement[1]?<div>{'周二'}</div>:''}
+      //     {weeklyArrangement[2]?<div>{'周三'}</div>:''}
+      //     {weeklyArrangement[3]?<div>{'周四'}</div>:''}
+      //     {weeklyArrangement[4]?<div>{'周五'}</div>:''}
+      //     {weeklyArrangement[5]?<div>{'周六'}</div>:''}
+      //     {weeklyArrangement[6]?<div>{'周日'}</div>:''}
+      //   </Space>
+      // )
     },
     {
       title: '操作',
@@ -253,12 +260,53 @@ function CounselorManagementCard({searchbar=false}:CounselorManagementProps){
       });
   };
 
-  useEffect(()=>{
-    getCounselorInfo()
+  const pageSize:number = 10;
+
+  function loadCounselorList(page){
+    getCounselorList(page,pageSize).then((res)=>{
+      setCurrentPage(page);
+      setTotal(res.data.total);
+      let newList = [];
+      res.data.items.forEach((item,index)=>{
+        newList.push({
+          name: item.name,
+          sex: item.gender,
+          username: item.username,
+          phone: item.phone,
+          email: item.email,
+          time: "123456",
+          state: item.enabled?'正常':'禁用',
+          id: item.id
+        })
+      })
+      setCounselorBasicList(newList);
+    }).catch((error) => {
+      console.log(error);
+    })
+    getCounselorWorkInfoList(page,pageSize).then((res)=>{
+      let newList = [];
+      res.data.items.forEach((item,index)=>{
+        newList.push({
+          name: item.name,
+          id: item.id,
+          identity: item.role,
+          bindingSupervisor: item.supervisors==null?null:item.supervisors.join(', '),
+          totalCounselNum: item.totalNum,
+          totalCounselTime: item.totalTime,
+          avgCounselLevel: item.rating,
+          weeklyArrangement: item.totalDay.join(', ')
+        })
+      })
+      setCounselorWorkInfoList(newList);
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
+
+  function loadSupervisorList(){
+    getSupervisorList()
       .then((response) => {
         let newList = [];
-        console.log("123456"+JSON.stringify(response));
-        console.log("123456"+response.data);
         let r:any = response;
         r.items.forEach((item)=>{
           newList.push({value: item.id, label: `${item.name} (${item.id})`})
@@ -268,6 +316,11 @@ function CounselorManagementCard({searchbar=false}:CounselorManagementProps){
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  useEffect(()=>{
+    loadCounselorList(1);
+    loadSupervisorList();
   },[])
 
   return(
@@ -285,10 +338,12 @@ function CounselorManagementCard({searchbar=false}:CounselorManagementProps){
       <br/>
       <Tabs defaultActiveKey='0'>
         <Tabs.TabPane tab='个人信息' key='0'>
-          <Table columns={counselorPersonMsgCols} dataSource={getFakeCounselorMsgs()}></Table>
+          <Table columns={counselorPersonMsgCols} dataSource={counselorBasicList}
+                 pagination={{total:total, current:currentPage, pageSize:pageSize, onChange: (page)=>{loadCounselorList(page)}}}> </Table>
         </Tabs.TabPane>
         <Tabs.TabPane tab='工作信息' key='1'>
-          <Table columns={counselorWorkMsgCols} dataSource={getFakeCounselorWorkMsgs()}></Table>
+          <Table columns={counselorWorkMsgCols} dataSource={counselorWorkInfoList}
+                 pagination={{total:total, current:currentPage, pageSize:pageSize, onChange: (page)=>{loadCounselorList(page)}}}></Table>
         </Tabs.TabPane>
       </Tabs>
 

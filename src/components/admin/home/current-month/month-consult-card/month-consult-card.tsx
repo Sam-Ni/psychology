@@ -6,6 +6,7 @@ import {CenterCSS} from "../../../../common/common";
 interface Item {
   name: string;
   score: number;
+  avatar: string;
 }
 interface Rank {
   data: Item[];
@@ -15,7 +16,7 @@ export function MonthConsultCard(props: Rank) {
   return (
     <Card style={CenterCSS}>
       <div style={{fontWeight:'bold', paddingBottom:'16px'}}>{props.title}</div>
-      {props.data.map(({name, score}, index)=> {
+      {props.data.map(({name, score, avatar}, index)=> {
         return (
           <Row style={{width:'200px'}} justify={'space-between'}>
             <Space>
@@ -23,7 +24,7 @@ export function MonthConsultCard(props: Rank) {
                 {index + 1}
               </Col>
               <Col>
-              <Avatar size={'small'} icon={<UserOutlined />} />
+              <Avatar size={'small'} src={avatar} />
               </Col>
               <Col style={{width:'100px'}}>
                 {name}
