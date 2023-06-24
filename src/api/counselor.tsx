@@ -4,46 +4,48 @@ import user from "../store/reducers/user";
 import config from "./config";
 
 //获取咨询师信息
-export function getCounselorInfo(id = getID()) {
+export function getCounselorInfo(id=getID()){
   return service.get('/counselor/info',
-    {params: {id: id}});
+    {params:{id: id}});
 }
 
-export function getCounselorList(page = 1, size = 1) {
+export function getCounselorList(page = 1,size = 999){
   return service.get('/counselor/list',
-    {
-      params: {
-        page: page,
-        size: size,
-        order: 'id asc'
-      }
-    });
+    {params:{
+        page:page,
+        size:size,
+        order:'id asc'
+      }});
 }
 
-export function getCounselorWorkInfoList(page = 1, size = 1) {
+export function getCounselorWorkInfoList(page = 1,size = 1){
   return service.get('/account/counselors',
-    {
-      params: {
-        page: page,
-        size: size,
-        order: 'id asc'
-      }
-    });
+    {params:{
+        page:page,
+        size:size,
+        order:'id asc'
+      }});
 }
 
-export function insertCounselor(data: any) {
-
+export function insertCounselor(data:any){
+  console.log(JSON.stringify(data));
+  return service.post('/account/counselor',
+    JSON.stringify(data),
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }});
 }
 
 //获取可用督导列表
-export function getAvailableDudaoList(id = getID()) {
+export function getAvailableDudaoList(id=getID()) {
   return service.get('/supervisor/available',
-    {params: {counselorId: id, page: 1, size: 3, order: "id asc"}});
+    {params:{counselorId: id, page: 1, size: 999, order: "id asc"}});
 }
 
 export function askDudao(group_id, owner) {
   service.get('/im/group/add_member',
-    {params: {group_id: group_id, member: owner}});
+    {params:{group_id: group_id, member: owner}});
 }
 
 export function sendMessage(from, to, text) {
@@ -82,15 +84,15 @@ export function finishConsult(username: string, counselorName: string, comment: 
   // })
 }
 
-export function startChatWithDudao(counselor: string, supervisor: string) {
-  return service.post('/dialogue/start', {
+export function startChatWithDudao(counselor: string, supervisor: string, group_id: string) {
+  return service.post('/dialogue/start/' + group_id, {
     counselor: counselor,
     supervisor: supervisor,
   })
 }
 
 export function finishChatWithDudao(id: string) {
-  service.post('/dialogue/save_roam_msg', {
+  return service.post('/dialogue/save_roam_msg', {
     dialogue_id: id,
   })
 }

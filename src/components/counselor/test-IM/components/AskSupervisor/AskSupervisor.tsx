@@ -115,7 +115,12 @@ export function AskSupervisor(props) {
         if (askDudaoMap.has(conversation.conversationID)) {
           const chatID = store.getState().dudaoChatId.chatIDMap.get(conversation.conversationID);
           console.log('onFinishOk', chatID);
-          finishChatWithDudao(chatID);
+          finishChatWithDudao(chatID)
+            .then(r => {
+              const convToDudao = askDudaoMap.get(conversation.currentConversation);
+              tim?.deleteConversation(convToDudao.conversationID)
+                .then(r => console.log('deleteConv', r));
+            });
         }
 
         setComment(values.judge);
@@ -164,18 +169,13 @@ export function AskSupervisor(props) {
             requestAskDudao(dudaoID);
             console.log('onAskOk', counselor);
             console.log('onAskOk', supervisor);
-            startChatWithDudao(counselor, supervisor)
+            startChatWithDudao(counselor, supervisor, group_id)
               .then(res => {
                 const id = res.data.id;
                 console.log('onAskOk', id);
                 store.dispatch(setChatId(conversation.conversationID, id));
               });
           })
-        // sendMessage(imid, dudaoID, "求助开始")
-        //   .then(r => {
-        //     requestAskDudao(dudaoID);
-        //     startChatWithDudao(counselor, supervisor);
-        //   });
       })
   }
 

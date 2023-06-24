@@ -42,7 +42,7 @@ function AdminHome()
   const [onlineCounselorList, setOnlineCounselorList] = useState<OnlineList>({list:[], currentPage:1, total:0});
   const [onlineSupervisorList, setOnlineSupervisorList] = useState<OnlineList>({list:[], currentPage:1, total:0});
 
-  const pageSize :number = 2;
+  const pageSize :number = 12;
 
   function loadBasicStatInfo(){
     getBasicStatInfo().then((res)=>{
@@ -106,7 +106,7 @@ function AdminHome()
   function loadCounselorList(page:number){
     getCounselorByBusy(page,pageSize).then((res)=>{
       let newList = onlineCounselorList;
-      newList.currentPage = res.data.pageNum;
+      newList.currentPage = page;
       newList.total = res.data.total;
       newList.list = [];
       res.data.items.forEach((item,index)=>{
@@ -114,6 +114,7 @@ function AdminHome()
       })
       setOnlineCounselorList(newList);
       console.log(newList);
+      doRefresh();
     }).catch((e)=>{
       console.log(e);
     });
@@ -122,13 +123,15 @@ function AdminHome()
   function loadSupervisorList(page:number){
     getSupervisorByBusy(page,pageSize).then((res)=>{
       let newList = onlineSupervisorList;
-      newList.currentPage = res.data.pageNum;
+      newList.currentPage = page;
       newList.total = res.data.total;
+      newList.list = [];
       res.data.items.forEach((item,index)=>{
         newList.list.push({key: index, name: item.supervisor, state: item.counselor==="空闲"})
       })
       setOnlineSupervisorList(newList);
       console.log(newList);
+      doRefresh();
     }).catch((e)=>{
       console.log(e);
     });
@@ -142,7 +145,16 @@ function AdminHome()
     loadCounselorRanking();
     loadCounselorList(1);
     loadSupervisorList(1);
-  },[])
+  },[]);
+
+  //刷新冗余参数
+  const [refresh, setRefresh] = useState(false);
+
+  useEffect(() => {
+    refresh && setTimeout(() => setRefresh(false))
+  }, [refresh])
+
+  const doRefresh = () => setRefresh(true);
 
   return (
     <ConfigProvider locale={locale}>

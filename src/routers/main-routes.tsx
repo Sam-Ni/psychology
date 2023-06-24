@@ -23,6 +23,7 @@ import {ChatWithDudao} from "../components/counselor/test-IM/components/ChatWith
 import {ChatWithCoun} from "../components/supervisor/IM/component/ChatWithCoun/ChatWithCoun";
 import RecentTable from "../components/supervisor/home/recent-table/recent-table";
 import SupervisorRecord from "../components/supervisor/home/recent-table/Supervisor-record";
+import VisitorManagement from "../pages/admin/visitor-management/visitor-management";
 
 /*
 主路由
@@ -31,7 +32,7 @@ const MainRoutes = () => {
   return (
     <Routes>
       // need to judge auth
-      <Route path="/" element={ isLogin() ? <Navigate to={'/'+getRole()} /> : <Navigate to='login'/> } />
+      <Route path="/" element={ isLogin() ? <Navigate to={'/'+getRole().toLowerCase()} /> : <Navigate to='login'/> } />
       <Route path="/login" Component={LoginIndex}/>
       <Route path="/counselor" Component={CounselorIndex}>
         <Route index Component={CounselorHome}/>
@@ -53,6 +54,7 @@ const MainRoutes = () => {
         <Route path="arrangement-table" Component={ArrangementTable}/>
         <Route path="counselor-management" Component={CounselorManagement}/>
         <Route path="supervisor-management" Component={SupervisorManagement}/>
+        <Route path="visitor-management" Component={VisitorManagement}/>
       </Route>
 
 

@@ -11,9 +11,9 @@ const isPrd = process.env.NODE_ENV === 'production';
 
 //区分开发环境还是生产环境基础URL
 // export const basicUrl = isPrd ? 'http://www.sinsen.cc:8080/' : 'http://www.sinsen.cc:8080/'
-// export const basicUrl = isPrd ? 'http://1.117.156.226:8081' : 'http://1.117.156.226:8081'
+export const basicUrl = isPrd ? 'http://1.117.156.226:8081' : 'http://1.117.156.226:8081'
 // export const basicUrl = isPrd ? 'http://localhost:8081' : 'http://localhost:8081'
-export const basicUrl = isPrd ? 'http://172.31.40.221:8081' : 'http://172.31.40.221:8081'
+// export const basicUrl = isPrd ? 'http://192.168.1.119:8081' : 'http://192.168.1.119:8081'
 
 //设置axios基础路径
 const service = axios.create({

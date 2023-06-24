@@ -7,6 +7,10 @@ export function getCounselorConsultInfo(){
     {params:{counselor: getID()}});
 }
 
+export function getSupervisorConsultInfo(){
+  return service.get('/supervisor/getBasicStatInfoBySupervisor',
+    {params:{supervisorId: getID()}});
+}
 
 
 

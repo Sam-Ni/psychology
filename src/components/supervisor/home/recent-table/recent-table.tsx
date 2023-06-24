@@ -96,7 +96,9 @@ function RecentTable(){
         });
       });
       setCounselorRecordList(newList);
-      const newChatList = res.data.items.map(item=>{
+      const newChatList = res.data.items.filter(item=> {
+        return item.message !== null;
+      }).map(item=>{
         const id = item.id;
         const messageList =
           item.message.rspMsgList.filter(message=> {

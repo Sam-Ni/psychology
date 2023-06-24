@@ -20,9 +20,6 @@ function CounselorMenu(){
       <Menu.Item key='2' icon={<BarsOutlined />} onClick={() => navigate('record')} >
         咨询记录
       </Menu.Item>
-      <Menu.Item key='3' icon={<DesktopOutlined />} onClick={() => navigate('2')} >
-        Option 2
-      </Menu.Item>
     </Menu>
   )
 }

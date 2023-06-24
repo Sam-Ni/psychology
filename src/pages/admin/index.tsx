@@ -8,13 +8,17 @@ import HomeFooter from "../../components/footer/footer";
 import CounselorMenu from "../../components/counselor/menu/menu";
 import Sider from "antd/es/layout/Sider";
 import AdminMenu from "./menu/menu";
+import {Helmet} from "react-helmet";
 
 function AdminIndex() {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
     <Layout className="layout">
-
+      <Helmet>
+        <title>心慰——管理员页</title>
+        <link rel="icon" href="./icon.png" />
+      </Helmet>
       <HomeHeader/>
 
       <Layout>

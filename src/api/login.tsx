@@ -11,7 +11,12 @@ export async function login(username: string, password: string): Promise<boolean
       console.log(res);
       if(res.status === 0)
       {
-        store.dispatch(setLoginMsg(res.data));
+        const data = {
+          ...res.data,
+          role: res.data.role.toLowerCase(),
+        }
+        console.log('loginTest', data);
+        store.dispatch(setLoginMsg(data));
         getUser(store.getState().login.id);
         return true;
       }

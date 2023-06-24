@@ -39,6 +39,7 @@ function HomeHeader() {
   return (
     <Header style={{ display: 'flex', alignItems: 'center' }}>
       <div className="demo-logo" />
+      <Avatar src='./logo.svg' size={"large"}/>
       <div className="header-title">心慰——心理健康平台</div>
       <div className="user-div">
 

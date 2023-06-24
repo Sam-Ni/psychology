@@ -1,5 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {Avatar, Button, Calendar, Card, ConfigProvider, Layout, List, Space, Table, Tabs} from "antd";
+import {
+  Alert,
+  Avatar,
+  Button,
+  Calendar,
+  Card,
+  ConfigProvider,
+  Form,
+  Layout,
+  List, Modal,
+  Select,
+  Space,
+  Table,
+  Tabs
+} from "antd";
 import {Content} from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import dayjs, {Dayjs} from "dayjs";
@@ -14,9 +28,13 @@ import locale from 'antd/locale/zh_CN';
 import {getFakeNums, getFakeNumsInDay} from "../../../util/fake";
 import {PaginationConfig, PaginationPosition} from "antd/es/pagination/Pagination";
 import {
+  addArrange,
   getCounselorArrangeNumsByMonth, getCounselorListByDay,
   getSupervisorArrangeNumsByMonth, getSupervisorListByDay
 } from "../../../api/arrange";
+import {bindSupervisors} from "../../../api/admin";
+import {getSupervisorList} from "../../../api/supervisor";
+import {getCounselorList} from "../../../api/counselor";
 
 function ArrangementTableCard()
 {
@@ -28,11 +46,20 @@ function ArrangementTableCard()
   const [counselorList,setCounselorList] = useState([]);
   const [supervisorList,setSupervisorList] = useState([]);
 
+  const [addCounselorForm] = Form.useForm();
+  const [openAddCounselorModel,setOpenAddCounselorModel] = useState(false);
+
+  const [addSupervisorForm] = Form.useForm();
+  const [openAddSupervisorModel,setOpenAddSupervisorModel] = useState(false);
+
+  const [counselorSelectList, setCounselorSelectList] = useState([]);
+  const [supervisorSelectList, setSupervisorSelectList] = useState([]);
+
   //刷新冗余参数
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    refresh && setTimeout(() => setRefresh(false))
+    refresh && setTimeout(() => setRefresh(false),500);
   }, [refresh])
 
   const doRefresh = () => setRefresh(true);
@@ -100,11 +127,77 @@ function ArrangementTableCard()
 
   const pageConfig:PaginationConfig = {position:'bottom',align:'center'}
 
+  const handleAddCounselorFinish = (values:any) => {
+    addCounselorForm
+      .validateFields()
+      .then((values) => {
+        addArrange(selectedDate,values.counselors.value,"COUNSELOR").then((res)=>{
+          setOpenAddCounselorModel(false);
+          setCounselorList(getCounselorListByDay(selectedDate));
+          setSupervisorList(getSupervisorListByDay(selectedDate));
+          doRefresh();
+        }).catch((e)=>{
+          console.log(e);
+        })
+      })
+      .catch((info) => {
+        console.log('Validate Failed:', info);
+      });
+  };
+
+  const handleAddSupervisorFinish = (values:any) => {
+    addSupervisorForm
+      .validateFields()
+      .then((values) => {
+        addArrange(selectedDate,values.supervisors.value,"SUPERVISOR").then((res)=>{
+          setOpenAddSupervisorModel(false);
+          setCounselorList(getCounselorListByDay(selectedDate));
+          setSupervisorList(getSupervisorListByDay(selectedDate));
+          doRefresh();
+        }).catch((e)=>{
+          console.log(e);
+        })
+      })
+      .catch((info) => {
+        console.log('Validate Failed:', info);
+      });
+  };
+
+  function loadCounselorUnArrangeList(){
+    getCounselorList()
+      .then((res) => {
+        let newList = [];
+        res.data.items.forEach((item)=>{
+          newList.push({value: item.id, label: `${item.name} (${item.id})`})
+        });
+        setCounselorSelectList(newList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function loadSupervisorUnArrangeList(){
+    getSupervisorList()
+      .then((res) => {
+        let newList = [];
+        res.data.items.forEach((item)=>{
+          newList.push({value: item.id, label: `${item.name} (${item.id})`})
+        });
+        setSupervisorSelectList(newList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   useEffect(()=>{
     setCounselorArrangeNums(getCounselorArrangeNumsByMonth(dayjs()));
     setSupervisorArrangeNums(getSupervisorArrangeNumsByMonth(dayjs()));
-
     setCounselorList(getCounselorListByDay(dayjs()));
+    setSupervisorList(getSupervisorListByDay(dayjs()));
+    loadCounselorUnArrangeList();
+    loadSupervisorUnArrangeList();
   },[])
 
   useEffect(()=>{
@@ -143,7 +236,7 @@ function ArrangementTableCard()
           </Space>
           <Tabs defaultActiveKey='0' centered>
             <Tabs.TabPane tab='咨询师' key='0'>
-              <Button type={"link"} icon={<PlusOutlined />}>添加咨询师</Button>
+              <Button type={"link"} icon={<PlusOutlined />} onClick={()=>{setOpenAddCounselorModel(true)}}>添加咨询师</Button>
               <List
                 itemLayout="horizontal"
                 dataSource={counselorList}
@@ -160,7 +253,7 @@ function ArrangementTableCard()
               />
             </Tabs.TabPane>
             <Tabs.TabPane tab='督导' key='1'>
-              <Button type={"link"} icon={<PlusOutlined />}>添加督导</Button>
+              <Button type={"link"} icon={<PlusOutlined />} onClick={()=>{setOpenAddSupervisorModel(true)}}>添加督导</Button>
               <List
                 itemLayout="horizontal"
                 dataSource={supervisorList}
@@ -180,7 +273,63 @@ function ArrangementTableCard()
 
         </Sider>
       </Layout>
+
+      <Modal title='添加咨询师' centered open={openAddCounselorModel} okText={"确认"} width={800}
+             cancelText={"取消"}
+             onOk={handleAddCounselorFinish}
+             onCancel={()=>{setOpenAddCounselorModel(false)}}>
+        <Form
+          form={addCounselorForm}
+          name="basic"
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 24 }}
+          layout={"vertical"}
+          initialValues={{ remember: false }}
+          autoComplete="off"
+          requiredMark={false}
+        >
+          <Form.Item label="咨询师" name="counselors" rules={[{ required: true, message: '请选择咨询师!' }]}>
+            <Select
+              labelInValue
+              style={{ width: '100%' }}
+              placeholder="Please select"
+              options={counselorSelectList}
+              optionLabelProp="label"
+              maxTagCount="responsive"
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      <Modal title='添加督导' centered open={openAddSupervisorModel} okText={"确认"} width={800}
+             cancelText={"取消"}
+             onOk={handleAddSupervisorFinish}
+             onCancel={()=>{setOpenAddSupervisorModel(false)}}>
+        <Form
+          form={addSupervisorForm}
+          name="basic"
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 24 }}
+          layout={"vertical"}
+          initialValues={{ remember: false }}
+          autoComplete="off"
+          requiredMark={false}
+        >
+          <Form.Item label="督导" name="supervisors" rules={[{ required: true, message: '请选择督导!' }]}>
+            <Select
+              labelInValue
+              style={{ width: '100%' }}
+              placeholder="Please select"
+              options={supervisorSelectList}
+              optionLabelProp="label"
+              maxTagCount="responsive"
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
+
     </Card>
+
 
   );
 }
