@@ -14,6 +14,7 @@ import {ChatSDK} from "tim-js-sdk/tim-js-friendship";
 import {store} from "../../store";
 import {TUIKit} from "@tencentcloud/chat-uikit-react";
 import {loginTim, logoutTim} from "../../util/tim";
+import SupervisorMenu from "../../components/supervisor/menu/menu";
 
 
 function SupervisorIndex() {
@@ -37,7 +38,7 @@ function SupervisorIndex() {
       <TUIKit tim={tim}>
           <Layout>
             <Sider theme="light" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-              <CounselorMenu/>
+              <SupervisorMenu/>
               <SupervisorConversation/>
             </Sider>
             <Layout>

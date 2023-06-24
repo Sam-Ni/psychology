@@ -17,6 +17,7 @@ export function MyConversation() {
         showSearch={false}
         Preview={MyConversationPreviewContent}
         setCurrentConversation={(conversation)=>store.dispatch(setCurrentConversation(conversation))}
+        onlyGroupConversation={true}
       />
     </div>
   )

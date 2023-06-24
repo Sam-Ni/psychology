@@ -173,7 +173,7 @@ export function MessagePlugins <T extends MessagePluginsProps>(
   const ForWardElement = useMessagePluginElement({
     children: (
       <div className="message-plugin-item">
-        <span>Forward</span>
+        <span>查看合并信息</span>
         <Icon width={20} height={20} type={IconTypes.FORWARD} />
       </div>
     ),

@@ -2,6 +2,7 @@ import service from "./config";
 import {store} from "../store";
 import {clearLoginMsg} from "../store/actions/login";
 import {AxiosResponse} from "axios";
+import {getID} from "../util/common";
 
 export async function getBasicStatInfo() {
   return service.get('/counselor/getBasicStatInfo', {});
@@ -41,4 +42,15 @@ export async function getSupervisorByBusy(page=1,size=0){
         size:size,
         order:'id asc'
       }});
+}
+
+export function getAllRecordList(page = 1, pageSize = 1) {
+  return service.get('/conversation/list',
+    {
+      params: {
+        page: page,
+        size: pageSize,
+        order: 'id asc'
+      }
+    });
 }

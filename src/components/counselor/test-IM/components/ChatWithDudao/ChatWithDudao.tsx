@@ -41,12 +41,13 @@ export function ChatWithDudao() {
     return supervisorId;
   }
 
-  const onClick = ()=> {
-    const supervisorId = sendMessage();
+  const onClick = (supervisorId: string)=> {
     const B2C = "C2C" + supervisorId;
     const B2A = store.getState().conversationContext.currentConversation.conversationID;
     tim?.getConversationList()
       .then(res=>{
+        console.log('B2C', res.data.conversationList);
+        console.log('B2C', B2C);
         const conv2Dudao = res.data.conversationList.find(item=>item.conversationID === B2C);
         console.log('B2C', conv2Dudao);
         setConversation(conv2Dudao);

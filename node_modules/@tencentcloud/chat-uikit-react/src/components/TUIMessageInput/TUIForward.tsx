@@ -110,7 +110,7 @@ export function TUIForward <T extends TUIForwardToProps>(
             height={16}
             onClick={handleClose}
           />
-          <h2 className="tui-forward-title">Forward To</h2>
+          {/*<h2 className="tui-forward-title">Forward To</h2>*/}
         </header>
         {/*<div className="tui-forward-search">*/}
         {/*  <Input*/}
@@ -190,7 +190,7 @@ export function TUIForward <T extends TUIForwardToProps>(
           {/*</ul>*/}
           {/*)}*/}
           {/*<TUIMessageList messageList={message.payload.messageList} />*/}
-          {message.payload.messageList.map(e=> {
+          {message && message.type === TIM.TYPES.MSG_MERGER && message.payload.messageList.map(e=> {
             return (
               <div>
                 <span>{e.from}</span>: <span>{e.messageBody[0].payload.text}</span>
@@ -199,8 +199,8 @@ export function TUIForward <T extends TUIForwardToProps>(
           })}
         </main>
         <footer className="tui-forward-footer">
-          <div className="tui-forward-footer-name">{selectList.length > 0 && handleDisplayForwardName(selectList)}</div>
-          <button type="button" className="button" onClick={() => { handleForward(selectList); }} disabled={selectList.length === 0}>Forward</button>
+          {/*<div className="tui-forward-footer-name">{selectList.length > 0 && handleDisplayForwardName(selectList)}</div>*/}
+          {/*<button type="button" className="button" onClick={() => { handleForward(selectList); }} disabled={selectList.length === 0}>Forward</button>*/}
         </footer>
       </div>
       <div>Test</div>

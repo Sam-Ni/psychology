@@ -38,3 +38,11 @@ export function getItem(
     type,
   } as MenuItem;
 }
+
+export function computeDiffTime(start: number, end: number) {
+  const diff = Math.floor( Math.abs((end - start)) / 1000);
+  const hours = Math.floor(diff / 3600);
+  const minutes = Math.floor(diff % 3600 / 60);
+  const seconds = Math.floor(diff % 60);
+  return { hours: hours, minutes: minutes, seconds: seconds };
+}

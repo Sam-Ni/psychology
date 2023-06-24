@@ -17,6 +17,7 @@ export function SupervisorConversation() {
         showSearch={false}
         Preview={MyConversationPreviewContent}
         setCurrentConversation={(conversation)=>store.dispatch(setCurrentConversation(conversation))}
+        onlyC2CConversation={true}
       />
     </div>
   )
