@@ -93,3 +93,14 @@ export function getSupervisorListByDay(day:Dayjs){
     });
   return supervisorList;
 }
+
+export function addArrange(day:Dayjs,id,role){
+  return service.post('/arrange/insert',
+    {
+      user:id,
+      role:role,
+      startTime:day.format("YYYY-MM-DD")+"T09:00:00",
+      endTime:day.format("YYYY-MM-DD")+"T17:00:00",
+      weekday:day.toDate().getDay()
+    });
+}

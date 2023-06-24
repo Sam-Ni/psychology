@@ -4,7 +4,7 @@ import {clearLoginMsg} from "../store/actions/login";
 import {AxiosResponse} from "axios";
 
 export async function getBasicStatInfo() {
-  return service.get('/counselor/getBasicStatInfo', {});
+  return service.get('/account/getBasicStatInfo', {});
 }
 
 export async function getNumByHours() {
@@ -35,7 +35,31 @@ export async function getCounselorByBusy(page=1,size=0){
 }
 
 export async function getSupervisorByBusy(page=1,size=0){
-  return service.get('/counselor/getSupervisorByBusy',
+  return service.get('/supervisor/getSupervisorByBusy',
+    {params:{
+        page:page,
+        size:size,
+        order:'id asc'
+      }});
+}
+
+export async function banUser(id){
+  return service.post('/account/banUser',[id],
+    );
+}
+
+export async function enableUser(id){
+  return service.post('/account/enableUser',[id],
+  );
+}
+
+export async function bindSupervisors(id, supervisorIds:number[]){
+  return service.post('/account/counselor/binding/'+id, [...supervisorIds]
+  );
+}
+
+export async function getVisitors(page=1,size=0){
+  return service.get('/account/visitors',
     {params:{
         page:page,
         size:size,

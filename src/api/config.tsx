@@ -20,13 +20,13 @@ const service = axios.create({
 })
 
 // 请求拦截器
-service.interceptors.request.use(config => {
-  //序列化请求参数，不然post请求参数后台接收不正常
-  config.data = QS.stringify(config.data)
-  return config;
-}, error => {
-  return error;
-})
+// service.interceptors.request.use(config => {
+//   //序列化请求参数，不然post请求参数后台接收不正常
+//   config.data = QS.stringify(config.data)
+//   return config;
+// }, error => {
+//   return error;
+// })
 
 // 响应拦截器
 service.interceptors.response.use(response => {

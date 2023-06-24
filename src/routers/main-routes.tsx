@@ -21,6 +21,7 @@ import ArrangementTable from "../pages/admin/arrangement-table/arrangement-table
 import {ConsultMain} from "../components/counselor/test-IM/components/ConsultMain/ConsultMain";
 import {ChatWithDudao} from "../components/counselor/test-IM/components/ChatWithDudao/ChatWithDudao";
 import {ChatWithCoun} from "../components/supervisor/IM/component/ChatWithCoun/ChatWithCoun";
+import VisitorManagement from "../pages/admin/visitor-management/visitor-management";
 
 /*
 主路由
@@ -51,6 +52,7 @@ const MainRoutes = () => {
         <Route path="arrangement-table" Component={ArrangementTable}/>
         <Route path="counselor-management" Component={CounselorManagement}/>
         <Route path="supervisor-management" Component={SupervisorManagement}/>
+        <Route path="visitor-management" Component={VisitorManagement}/>
       </Route>
 
 

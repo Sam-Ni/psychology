@@ -12,6 +12,7 @@ import {store} from "../../store";
 import {ChatSDK} from "tim-js-sdk/tim-js-friendship";
 import {TUIKit} from "@tencentcloud/chat-uikit-react";
 import {loginTim, logoutTim, TimContextType} from "../../util/tim";
+import {Helmet} from "react-helmet";
 
 
 function CounselorIndex() {
@@ -29,6 +30,11 @@ function CounselorIndex() {
 
   return (
     <Layout className="layout">
+
+      <Helmet>
+        <title>心慰——咨询师页</title>
+        <link rel="icon" href="./icon.png" />
+      </Helmet>
 
       <HomeHeader/>
 

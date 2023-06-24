@@ -14,6 +14,7 @@ import {ChatSDK} from "tim-js-sdk/tim-js-friendship";
 import {store} from "../../store";
 import {TUIKit} from "@tencentcloud/chat-uikit-react";
 import {loginTim, logoutTim} from "../../util/tim";
+import {Helmet} from "react-helmet";
 
 
 function SupervisorIndex() {
@@ -31,6 +32,10 @@ function SupervisorIndex() {
 
   return (
     <Layout className="layout">
+      <Helmet>
+        <title>心慰——督导页</title>
+        <link rel="icon" href="./icon.png" />
+      </Helmet>
 
       <HomeHeader/>
 

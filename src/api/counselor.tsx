@@ -7,7 +7,7 @@ export function getCounselorInfo(id=getID()){
     {params:{id: id}});
 }
 
-export function getCounselorList(page = 1,size = 1){
+export function getCounselorList(page = 1,size = 999){
   return service.get('/counselor/list',
     {params:{
         page:page,
@@ -26,7 +26,13 @@ export function getCounselorWorkInfoList(page = 1,size = 1){
 }
 
 export function insertCounselor(data:any){
-  
+  console.log(JSON.stringify(data));
+  return service.post('/account/counselor',
+    JSON.stringify(data),
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }});
 }
 
 //获取可用督导列表

@@ -11,6 +11,24 @@ export function getSupervisorList(page=1, size=999){
     }});
 }
 
+export function getSupervisorWorkInfoList(page = 1,size = 1){
+  return service.get('/account/supervisors',
+    {params:{
+        page:page,
+        size:size,
+        order:'id asc'
+      }});
+}
+
+export function insertSupervisor(data:any){
+  console.log(JSON.stringify(data));
+  return service.post('/account/supervisor',
+    JSON.stringify(data),
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }});
+}
 
 
 
