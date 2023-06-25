@@ -7,7 +7,7 @@ import Password from "antd/es/input/Password";
 import {getCounselorList, getCounselorWorkInfoList, insertCounselor} from "../../../api/counselor";
 import {getSupervisorList, getSupervisorWorkInfoList, insertSupervisor} from "../../../api/supervisor";
 import {Md5} from "ts-md5";
-import {banUser, enableUser} from "../../../api/admin";
+import {banUser, enableUser, getUserSig, importUser} from "../../../api/admin";
 
 interface SupervisorManagementProps{
   searchbar?: boolean;
@@ -298,6 +298,11 @@ function SupervisorManagementCard({searchbar=false}:SupervisorManagementProps){
         }).then((res)=>{
           if(res.status==0){
             loadSupervisorList(1);
+            getUserSig(values.username, values.name)
+              .then(r => {
+                importUser(values.username)
+                // .then(r => );
+              });
             setOpenAddModel(false);
           }else {
             console.log(res);

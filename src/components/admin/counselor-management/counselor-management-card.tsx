@@ -10,8 +10,9 @@ import {getSupervisorList} from "../../../api/supervisor";
 import {getCounselorList, getCounselorWorkInfoList, insertCounselor} from "../../../api/counselor";
 import {faker, fakerZH_CN} from "@faker-js/faker";
 import {Md5} from "ts-md5";
-import {banUser, bindSupervisors, enableUser} from "../../../api/admin";
+import {banUser, bindSupervisors, enableUser, getUserSig, importUser} from "../../../api/admin";
 import {getID} from "../../../util/common";
+import {pinyin} from "pinyin-pro";
 
 interface CounselorManagementProps{
   searchbar?: boolean;
@@ -281,6 +282,11 @@ function CounselorManagementCard({searchbar=false}:CounselorManagementProps){
         }).then((res)=>{
           if(res.status==0){
             loadCounselorList(1);
+            getUserSig(values.username, values.name)
+              .then(r => {
+                importUser(values.username)
+                  // .then(r => );
+              });
             setOpenAddModel(false);
           }else {
             console.log(res);

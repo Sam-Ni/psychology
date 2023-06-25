@@ -78,3 +78,20 @@ export function getAllRecordList(page = 1, pageSize = 1) {
       }
     });
 }
+
+export function getUserSig(imid: string, name: string) {
+  return service.get('/userSig', {
+    params: {
+      imid: imid,
+      name: name,
+    }
+  })
+}
+
+export function importUser(imid: string) {
+  return service.get('/im/import', {
+    params: {
+      imid: imid,
+    }
+  })
+}
